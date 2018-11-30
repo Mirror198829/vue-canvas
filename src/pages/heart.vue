@@ -11,7 +11,7 @@ export default {
     return {
       canvas:{
         width:1600,
-        height:1000
+        height:800
       }
     }
   },
