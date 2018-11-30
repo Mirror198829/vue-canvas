@@ -10,8 +10,8 @@ export default {
   data () {
     return {
       canvas:{
-        width:800,
-        height:500
+        width:1600,
+        height:1000
       }
     }
   },
