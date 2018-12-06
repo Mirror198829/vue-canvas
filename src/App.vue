@@ -2,10 +2,11 @@
   <div id="app">
     <header>
       <el-menu 
+        :router="true"
         :default-active="$route.path" class="elMenu" mode="horizontal" background-color="#545c64"
         text-color="#fff" active-text-color="#ffd04b">
         <el-menu-item index="/heart">heart</el-menu-item>
-        <el-menu-item index="2">处理中心</el-menu-item>
+        <el-menu-item index="/time">会动的时钟</el-menu-item>
         <el-menu-item index="3">消息中心</el-menu-item>
       </el-menu>
     </header>
