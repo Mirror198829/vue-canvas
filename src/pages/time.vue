@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2018-11-30 17:02:32
  * @LastEditors: caojing
- * @LastEditTime: 2018-12-06 16:47:48
+ * @LastEditTime: 2018-12-06 17:00:07
  * @Description: 时间的canvas
  -->
 <template>
@@ -33,26 +33,28 @@
         let context = canvas.getContext('2d')
         canvas.width = WIN_WIDTH
         canvas.height = WIN_HEIGHT
+        context.clearRect(0,0,WIN_WIDTH,WIN_HEIGHT);
+        this.render(context)
         setInterval(() => {
           context.clearRect(0,0,WIN_WIDTH,WIN_HEIGHT);
           this.render(context)
         },1000)
       },
       render(cxt){
-         let [curTime,endTime] = [0,0]
+         let curTime
          let [hour,minutes,seconds]=[0,0,0]
          let RADIUS = this.RADIUS
          const MARGIN_LEFT = 12
          const MARGIN_TOP = 40
          const DIST = 15
-         endTime = new Date(2018,11,6,17,50,12)
          curTime = new Date()
-         let ret = endTime.getTime() - curTime.getTime()
+         let ret = curTime
          ret = Math.round(ret / 1000)
          ret > 0 ? ret : 0
-         hour = parseInt(ret/3600)
-         minutes = parseInt((ret - hour*3600)/60)
-         seconds = ret % 60
+         hour = curTime.getHours()
+         minutes = curTime.getMinutes()
+         seconds = curTime.getSeconds()
+
          this.renderDigit(MARGIN_LEFT,MARGIN_TOP,parseInt(hour/10),cxt) //绘制数字
          this.renderDigit(MARGIN_LEFT + DIST*(RADIUS+1),MARGIN_TOP,parseInt(hour%10),cxt)
          this.renderDigit(MARGIN_LEFT + 2*DIST*(RADIUS+1),MARGIN_TOP,10,cxt)
