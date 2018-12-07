@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2018-11-30 17:02:32
  * @LastEditors: caojing
- * @LastEditTime: 2018-12-07 11:46:49
+ * @LastEditTime: 2018-12-07 15:06:23
  * @Description: 时间的canvas
  -->
 <template>
@@ -41,7 +41,7 @@
         clearInterval(timer)
         timer = setInterval(() => {
           this.render(context)
-        }, 1000)
+        }, 50)
       },
       render(cxt) {
         let nextTime = new Date()
@@ -60,18 +60,57 @@
 
         
         cxt.clearRect(0, 0, cxt.canvas.width, cxt.canvas.height); //清除画布
-        this.renderBall(nextHours, nextMinutes, nextSeconds,beforeHours, beforeMinutes, beforeSeconds, cxt)
-        this.renderTime(nextHours, nextMinutes, nextSeconds, cxt) //回执时间
-        this.storeTime = nextTime
+        this.renderBall(nextHours, nextMinutes, nextSeconds,beforeHours, beforeMinutes, beforeSeconds, cxt)//添加小球
+       
+        this.updateBalls(cxt) //更新小球信息
+        this.renderTime(nextHours, nextMinutes, nextSeconds, cxt) //绘制时间
+         this.storeTime = nextTime
       },
       renderBall(nextHours, nextMinutes, nextSeconds,beforeHours, beforeMinutes, beforeSeconds, cxt){
         const [MARGIN_LEFT, MARGIN_TOP, DIST] = [12, 40, 15]
+        const RADIUS = this.RADIUS
         if (parseInt(beforeHours / 10) != parseInt(nextHours / 10))
           this.addBalls(MARGIN_LEFT + 0, MARGIN_TOP, parseInt(beforeHours / 10))
+        if (parseInt(beforeHours % 10) != parseInt(nextHours % 10))
+          this.addBalls(MARGIN_LEFT  + 1 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeHours % 10))
         if (parseInt(beforeMinutes / 10) != parseInt(nextMinutes / 10))
-          this.addBalls(MARGIN_LEFT + 0, MARGIN_TOP, parseInt(beforeHours / 10))
+          this.addBalls(MARGIN_LEFT + 3 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeMinutes / 10))
+        if (parseInt(beforeMinutes % 10) != parseInt(nextMinutes % 10))
+          this.addBalls(MARGIN_LEFT + 4 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeMinutes % 10))
+        if (parseInt(beforeSeconds / 10) != parseInt(nextSeconds / 10))
+          this.addBalls(MARGIN_LEFT + 6 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeSeconds / 10))
+        if (parseInt(beforeSeconds % 10) != parseInt(nextSeconds % 10))
+          this.addBalls(MARGIN_LEFT + 7 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeSeconds % 10))
       },
-      addBalls() {},
+      addBalls(x,y,num) {
+        let RADIUS = this.RADIUS
+        digit[num].forEach((digit,i) => {
+          digit.forEach((item,j) => {
+            if(item == 1){
+              let aBall = {
+                x:x + j*2*(RADIUS+1)+(RADIUS+1),
+                y:y + i*2*(RADIUS+1)+(RADIUS+1),
+                g:1.5+Math.random(),
+                vx:Math.pow(-1,Math.ceil(Math.random()*1000))*4,
+                vy:-5,
+                color:this.colors[Math.floor(Math.random()*this.colors.length)]
+              }  
+              this.balls.push(aBall)
+            }
+          })
+        })
+      },
+      updateBalls(cxt){
+        this.balls.forEach((ball,index) => {
+          ball.x += ball.vx
+          ball.y += ball.vy
+          ball.vy += ball.g
+          if(ball.y >= this.WIN_HEIGHT - this.RADIUS){
+            ball.y = this.WIN_HEIGHT - this.RADIUS
+            ball.vy = -ball.vy * 0.75
+          } 
+        })
+      },
       renderTime(hours, minutes, seconds, cxt) {
         const [MARGIN_LEFT, MARGIN_TOP, DIST] = [12, 40, 15]
         const RADIUS = this.RADIUS
@@ -83,6 +122,14 @@
         this.renderDigit(MARGIN_LEFT + 5 * DIST * (RADIUS + 1), MARGIN_TOP, 10, cxt)
         this.renderDigit(MARGIN_LEFT + 6 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(seconds / 10), cxt)
         this.renderDigit(MARGIN_LEFT + 7 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(seconds % 10), cxt)
+
+        this.balls.forEach((ball,index) => {
+          cxt.fillStyle = ball.color
+          cxt.beginPath()
+          cxt.arc(ball.x,ball.y,this.RADIUS,0,2*Math.PI,true)
+          cxt.closePath()
+          cxt.fill()
+        })        
       },
       renderDigit(x, y, num, cxt) {
         cxt.fillStyle = 'rgb(0,102,153)'
