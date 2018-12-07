@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <canvas id="canvas" :width="canvas.width" :height="canvas.height" style="border:1px solid #000"></canvas>
+    <canvas id="canvas" :width="canvas.width" :height="canvas.height"></canvas>
   </div>
 </template>
 
@@ -10,8 +10,8 @@ export default {
   data () {
     return {
       canvas:{
-        width:1600,
-        height:800
+        width:1024,
+        height:768
       }
     }
   },
@@ -72,7 +72,7 @@ export default {
                   ctx.fillStyle = "rgba(220,20,60,"+alpha+")";
                   ctx.fill();
               }          
-        },1000) 
+        },500) 
         
        // let rW = 0
        // setInterval(()=>{
