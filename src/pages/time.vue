@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2018-11-30 17:02:32
  * @LastEditors: caojing
- * @LastEditTime: 2018-12-07 15:06:23
+ * @LastEditTime: 2018-12-07 16:24:09
  * @Description: 时间的canvas
  -->
 <template>
@@ -19,10 +19,13 @@
       return {
         storeTime: new Date(),
         RADIUS: 7,
-        WIN_WIDTH: 1024,
-        WIN_HEIGHT: 768,
+        WIN_WIDTH:0,
+        WIN_HEIGHT:0,
         balls: [],
-        colors: ['#33B5E5', '#0099CC', '#AA66CC', '#9933CC', '#99CC00', '#669900', '#FFBB33', '#FF8800', '#FF444']
+        MARGIN_LEFT:12, 
+        MARGIN_TOP:40,
+        DIST:15,
+        colors: ['red','#33B5E5', '#0099CC', '#AA66CC', '#9933CC', '#99CC00', '#669900', '#FFBB33', '#FF8800', '#FF444']
       }
     },
     components: {
@@ -30,8 +33,11 @@
     },
     methods: {
       initCanvas() {
-        const WIN_WIDTH = this.WIN_WIDTH
-        const WIN_HEIGHT = this.WIN_HEIGHT
+        const WIN_WIDTH = this.WIN_WIDTH = ($('.routerMain').width())
+        const WIN_HEIGHT = this.WIN_HEIGHT = $('.routerMain').height() 
+        let timeW = WIN_WIDTH > 1000 ? 1000 : WIN_WIDTH
+        this.RADIUS = Math.round(timeW *4 / 5 / 98) -1
+        this.MARGIN_LEFT = (WIN_WIDTH - timeW) / 2
         let timer = null
         let canvas = document.getElementById('canvasTime')
         let context = canvas.getContext('2d')
@@ -67,7 +73,7 @@
          this.storeTime = nextTime
       },
       renderBall(nextHours, nextMinutes, nextSeconds,beforeHours, beforeMinutes, beforeSeconds, cxt){
-        const [MARGIN_LEFT, MARGIN_TOP, DIST] = [12, 40, 15]
+        const [MARGIN_LEFT, MARGIN_TOP, DIST] = [this.MARGIN_LEFT, this.MARGIN_TOP, this.DIST]
         const RADIUS = this.RADIUS
         if (parseInt(beforeHours / 10) != parseInt(nextHours / 10))
           this.addBalls(MARGIN_LEFT + 0, MARGIN_TOP, parseInt(beforeHours / 10))
@@ -102,17 +108,28 @@
       },
       updateBalls(cxt){
         this.balls.forEach((ball,index) => {
+          const [RADIUS,WIN_WIDTH,WIN_HEIGHT] = [this.RADIUS,this.WIN_WIDTH,this.WIN_HEIGHT]
           ball.x += ball.vx
           ball.y += ball.vy
           ball.vy += ball.g
-          if(ball.y >= this.WIN_HEIGHT - this.RADIUS){
-            ball.y = this.WIN_HEIGHT - this.RADIUS
+          if(ball.y >= WIN_HEIGHT - RADIUS){
+            ball.y = WIN_HEIGHT - RADIUS
             ball.vy = -ball.vy * 0.75
+          }
+
+          let cnt = 0
+          this.balls.forEach((item,index) => {
+            if(item.x + RADIUS > 0 && item.x - RADIUS < WIN_WIDTH)
+              this.balls[cnt++] = item
+           
+          })
+          while(this.balls.length > cnt){
+              this.balls.pop()
           } 
         })
       },
       renderTime(hours, minutes, seconds, cxt) {
-        const [MARGIN_LEFT, MARGIN_TOP, DIST] = [12, 40, 15]
+        const [MARGIN_LEFT, MARGIN_TOP, DIST] = [this.MARGIN_LEFT, this.MARGIN_TOP, this.DIST]
         const RADIUS = this.RADIUS
         this.renderDigit(MARGIN_LEFT, MARGIN_TOP, parseInt(hours / 10), cxt) //绘制数字
         this.renderDigit(MARGIN_LEFT + DIST * (RADIUS + 1), MARGIN_TOP, parseInt(hours % 10), cxt)

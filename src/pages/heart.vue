@@ -10,8 +10,8 @@ export default {
   data () {
     return {
       canvas:{
-        width:1024,
-        height:768
+        width:0,
+        height:0
       }
     }
   },
@@ -122,6 +122,8 @@ export default {
     }
   },
   mounted(){
+    this.canvas.width = $('.routerMain').width()
+    this.canvas.height = $('.routerMain').height()
     this.drawCanvas()
     
   }
