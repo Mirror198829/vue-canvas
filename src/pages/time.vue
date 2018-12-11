@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2018-11-30 17:02:32
  * @LastEditors: caojing
- * @LastEditTime: 2018-12-07 16:24:09
+ * @LastEditTime: 2018-12-11 15:00:50
  * @Description: 时间的canvas
  -->
 <template>
@@ -17,6 +17,7 @@
     name: '',
     data() {
       return {
+        timer:null,
         storeTime: new Date(),
         RADIUS: 7,
         WIN_WIDTH:0,
@@ -38,14 +39,13 @@
         let timeW = WIN_WIDTH > 1000 ? 1000 : WIN_WIDTH
         this.RADIUS = Math.round(timeW *4 / 5 / 98) -1
         this.MARGIN_LEFT = (WIN_WIDTH - timeW) / 2
-        let timer = null
         let canvas = document.getElementById('canvasTime')
         let context = canvas.getContext('2d')
         canvas.width = WIN_WIDTH
         canvas.height = WIN_HEIGHT
         this.render(context) //初始启动绘画
-        clearInterval(timer)
-        timer = setInterval(() => {
+        
+        this.timer = setInterval(() => {
           this.render(context)
         }, 50)
       },
@@ -70,23 +70,23 @@
        
         this.updateBalls(cxt) //更新小球信息
         this.renderTime(nextHours, nextMinutes, nextSeconds, cxt) //绘制时间
-         this.storeTime = nextTime
+        this.storeTime = nextTime
       },
       renderBall(nextHours, nextMinutes, nextSeconds,beforeHours, beforeMinutes, beforeSeconds, cxt){
         const [MARGIN_LEFT, MARGIN_TOP, DIST] = [this.MARGIN_LEFT, this.MARGIN_TOP, this.DIST]
         const RADIUS = this.RADIUS
         if (parseInt(beforeHours / 10) != parseInt(nextHours / 10))
-          this.addBalls(MARGIN_LEFT + 0, MARGIN_TOP, parseInt(beforeHours / 10))
+          this.addBalls(MARGIN_LEFT + 0, MARGIN_TOP, parseInt(nextHours / 10))
         if (parseInt(beforeHours % 10) != parseInt(nextHours % 10))
-          this.addBalls(MARGIN_LEFT  + 1 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeHours % 10))
+          this.addBalls(MARGIN_LEFT  + 1 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(nextHours % 10))
         if (parseInt(beforeMinutes / 10) != parseInt(nextMinutes / 10))
-          this.addBalls(MARGIN_LEFT + 3 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeMinutes / 10))
+          this.addBalls(MARGIN_LEFT + 3 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(nextMinutes / 10))
         if (parseInt(beforeMinutes % 10) != parseInt(nextMinutes % 10))
-          this.addBalls(MARGIN_LEFT + 4 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeMinutes % 10))
+          this.addBalls(MARGIN_LEFT + 4 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(nextMinutes % 10))
         if (parseInt(beforeSeconds / 10) != parseInt(nextSeconds / 10))
-          this.addBalls(MARGIN_LEFT + 6 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeSeconds / 10))
+          this.addBalls(MARGIN_LEFT + 6 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(nextSeconds / 10))
         if (parseInt(beforeSeconds % 10) != parseInt(nextSeconds % 10))
-          this.addBalls(MARGIN_LEFT + 7 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(beforeSeconds % 10))
+          this.addBalls(MARGIN_LEFT + 7 * DIST * (RADIUS + 1), MARGIN_TOP, parseInt(nextSeconds % 10))
       },
       addBalls(x,y,num) {
         let RADIUS = this.RADIUS
@@ -98,7 +98,7 @@
                 y:y + i*2*(RADIUS+1)+(RADIUS+1),
                 g:1.5+Math.random(),
                 vx:Math.pow(-1,Math.ceil(Math.random()*1000))*4,
-                vy:-5,
+                vy:-10,
                 color:this.colors[Math.floor(Math.random()*this.colors.length)]
               }  
               this.balls.push(aBall)
@@ -118,14 +118,24 @@
           }
 
           let cnt = 0
+          const MAXNUM = 200
           this.balls.forEach((item,index) => {
             if(item.x + RADIUS > 0 && item.x - RADIUS < WIN_WIDTH)
               this.balls[cnt++] = item
-           
-          })
-          while(this.balls.length > cnt){
+          }) //在这个屏幕内的小球
+          while(this.balls.length > cnt ){
               this.balls.pop()
-          } 
+          }//删除屏幕外的小球
+          if(this.balls.length - MAXNUM){
+            let delLen = this.balls.length - MAXNUM
+            for(let i = 0; i < delLen; i ++){
+              let max = this.balls.length - 20
+              let min = 1
+              let num = Math.floor(Math.random()*(max-min+1)+min)
+              this.balls.splice(num,1)
+            }
+          }//随机删除超出200个小球的球
+          console.log(this.balls.length)
         })
       },
       renderTime(hours, minutes, seconds, cxt) {
@@ -163,9 +173,19 @@
             }
           })
         })
+      },
+      bindWindow(){
+        window.onblur = ()=>{
+          clearInterval(this.timer)
+        }
+        window.onfocus = ()=>{
+          clearInterval(this.timer)
+          this.initCanvas()
+        }
       }
     },
     mounted() {
+      this.bindWindow()//绑定win的移入移出事件
       this.initCanvas()
     },
     created() {}
