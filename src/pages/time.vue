@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2018-11-30 17:02:32
  * @LastEditors: caojing
- * @LastEditTime: 2018-12-11 15:00:50
+ * @LastEditTime: 2018-12-11 15:34:20
  * @Description: 时间的canvas
  -->
 <template>
@@ -135,7 +135,6 @@
               this.balls.splice(num,1)
             }
           }//随机删除超出200个小球的球
-          console.log(this.balls.length)
         })
       },
       renderTime(hours, minutes, seconds, cxt) {
