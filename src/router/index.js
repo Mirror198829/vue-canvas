@@ -21,12 +21,12 @@ export default new Router({
     },
     {
       path:'/time',
-      name:Time,
+      name:'Time',
       component:Time
     },
     {
       path:'/progress',
-      name:Progress,
+      name:'Progress',
       component:Progress
     }
   ]
