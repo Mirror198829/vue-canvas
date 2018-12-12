@@ -7,7 +7,7 @@
         text-color="#fff" active-text-color="#ffd04b">
         <el-menu-item index="/heart">heart</el-menu-item>
         <el-menu-item index="/time">会动的时钟</el-menu-item>
-        <el-menu-item index="3">消息中心</el-menu-item>
+        <el-menu-item index="/progress">进度条</el-menu-item>
       </el-menu>
     </header>
     <router-view class="routerMain" />
