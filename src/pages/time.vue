@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2018-11-30 17:02:32
  * @LastEditors: caojing
- * @LastEditTime: 2018-12-11 15:34:20
+ * @LastEditTime: 2018-12-14 14:04:45
  * @Description: 时间的canvas
  -->
 <template>
@@ -33,16 +33,18 @@
 
     },
     methods: {
-      initCanvas() {
-        const WIN_WIDTH = this.WIN_WIDTH = ($('.routerMain').width())
-        const WIN_HEIGHT = this.WIN_HEIGHT = $('.routerMain').height() 
-        let timeW = WIN_WIDTH > 1000 ? 1000 : WIN_WIDTH
+      initConfig(){
+        this.WIN_WIDTH = ($('.routerMain').width())
+        this.WIN_HEIGHT = $('.routerMain').height() 
+        let timeW = this.WIN_WIDTH > 1000 ? 1000 : this.WIN_WIDTH
         this.RADIUS = Math.round(timeW *4 / 5 / 98) -1
-        this.MARGIN_LEFT = (WIN_WIDTH - timeW) / 2
+        this.MARGIN_LEFT = (this.WIN_WIDTH - timeW) / 2
+      },
+      initCanvas() {
         let canvas = document.getElementById('canvasTime')
         let context = canvas.getContext('2d')
-        canvas.width = WIN_WIDTH
-        canvas.height = WIN_HEIGHT
+        canvas.width = this.WIN_WIDTH
+        canvas.height = this.WIN_HEIGHT
         this.render(context) //初始启动绘画
         
         this.timer = setInterval(() => {
@@ -181,10 +183,16 @@
           clearInterval(this.timer)
           this.initCanvas()
         }
+        window.onresize = () =>{
+          clearInterval(this.timer)
+          this.initConfig()
+          this.initCanvas()
+        }
       }
     },
     mounted() {
       this.bindWindow()//绑定win的移入移出事件
+      this.initConfig()
       this.initCanvas()
     },
     created() {}
