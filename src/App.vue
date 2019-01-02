@@ -5,7 +5,7 @@
         :router="true"
         :default-active="$route.path" class="elMenu" mode="horizontal" background-color="#545c64"
         text-color="#fff" active-text-color="#ffd04b">
-        <el-menu-item index="/mouseDraw">绘制</el-menu-item>
+        <el-menu-item index="/mouseDraw">小黑板</el-menu-item>
         <el-menu-item index="/heart">heart</el-menu-item>
         <el-menu-item index="/time">会动的时钟</el-menu-item>
         <el-menu-item index="/progress">进度条</el-menu-item>

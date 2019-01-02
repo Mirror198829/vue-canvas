@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-02 14:02:18
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-02 16:28:42
+ * @LastEditTime: 2019-01-02 16:39:18
  * @Description: draw by mouse
  -->
 <template>
@@ -13,7 +13,7 @@
     </div>
     <div class="blackboard">
       <div class="innerBlackboard">
-        <canvas id="bbCanvas">
+        <canvas id="bbCanvas" width="600" height="300">
           浏览器不支持canvas
         </canvas>
       </div>
@@ -39,12 +39,12 @@
         let ctx = canvas.getContext('2d')
         let offsetL = $('#bbCanvas').offset().left
         let offsetT = $('#bbCanvas').offset().top         
-        canvas.onmousedown = (ev) =>{
+        canvas.onmousedown = function(ev){
             var ev = ev || window.event
             ctx.strokeStyle = '#fff'
             ctx.moveTo(ev.clientX - offsetL,ev.clientY - offsetT)
             console.log(ev.clientX - offsetL)
-            document.onmousemove = (event) => {
+            document.onmousemove = function(event) {
                var event = event || window.event
                ctx.lineTo(event.clientX - offsetL,event.clientY - offsetT)
                ctx.stroke() 
@@ -120,8 +120,7 @@
         border-radius: 4px;
 
         #bbCanvas {
-          width: @innerW;
-          height: @innerH - @woodH - 5px;
+         
         }
       }
       .woodBase {
