@@ -11,7 +11,7 @@
       </el-menu>
     </header>
     <router-view class="routerMain" />
-    <v-footer></v-footer>
+    <!-- <v-footer></v-footer> -->
   </div>
 </template>
 

@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2017-11-27 15:35:23
  * @LastEditors: caojing
- * @LastEditTime: 2018-11-30 16:49:53
+ * @LastEditTime: 2019-01-02 10:32:03
  -->
 <template>
   <footer class="foot">
