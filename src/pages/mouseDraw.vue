@@ -2,14 +2,15 @@
  * @Author: caojing
  * @Date: 2019-01-02 14:02:18
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-03 19:44:35
+ * @LastEditTime: 2019-01-03 20:00:16
  * @Description: draw by mouse
  -->
 <template>
   <div class="printWrap">
     <div class="ropeWrap">
       <div class="ropeItem"></div>
-      <div class="ropeItem"></div>
+      <div class="ropeItem ropeRightItem"></div>
+      <i class="nail"></i>
     </div>
     <div class="blackboard">
       <div class="innerBlackboard">
@@ -132,10 +133,10 @@
 
       .ropeItem {
         height: 5px;
-        flex: 1;
+        width: calc( 100% / 2);
         background: #a6a394;
 
-        &:last-child {
+        &.ropeRightItem {
           transform: rotate(25deg);
           transform-origin: 0 0;
         }
@@ -144,6 +145,16 @@
           transform: rotate(335deg);
           transform-origin: 100% 0;
         }
+      }
+      .nail{
+        position: absolute;
+        width:18px;
+        height:18px;
+        background:#a6a394;
+        border-radius:45% 35% 50% 30%;
+        left:50%;
+        transform:translate(-50%,0);
+        top:-7px;
       }
     }
 
