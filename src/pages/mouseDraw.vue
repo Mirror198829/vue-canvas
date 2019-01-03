@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-02 14:02:18
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-03 15:34:19
+ * @LastEditTime: 2019-01-03 15:52:52
  * @Description: draw by mouse
  -->
 <template>
@@ -16,7 +16,7 @@
         <canvas id="bbCanvas" width="600" height="330">
           浏览器不支持canvas
         </canvas>
-        <div class="blackEraser">
+        <div class="blackEraser" @mousedown="eraserBlackboard()">
           <div class="blackEraserInner"></div>
           <div class="diveLine"></div>
         </div>
@@ -38,6 +38,28 @@
 
     },
     methods: {
+      eraserBlackboard(ev){
+        var ev = ev || window.event
+        let [x1,y1] = [ev.clientX,ev.clientY]
+        let t1 = $('.blackEraser').position().top
+        let l1 = $('.blackEraser').position().left
+        console.log(l1)
+        document.onmousemove = (ev) => {
+          var ev =  ev || window.event
+          let [x2,y2] = [ev.clientX,ev.clientY]
+          let [disX,disY] = [x2-x1,y2-y1]
+          let t2 = t1 + disY
+          let l2 = l1 + disX
+          $('.blackEraser').css({
+            left:l2,
+            top:t2
+          })
+        }
+        document.onmouseup = () => {
+          document.onmousemove = null
+          document.onmouseoup = null
+        }
+      },
       initCavas() {
         let canvas = document.getElementById('bbCanvas')
         let ctx = canvas.getContext('2d')
@@ -132,6 +154,7 @@
           position: absolute;
           bottom: @woodH + 5;
           left:5px;
+          height:@eraserInnerH;
           padding: @eraserPadding;
           border-radius: 4px;
           background: #eee1d9;
