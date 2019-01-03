@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-02 14:02:18
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-03 19:38:12
+ * @LastEditTime: 2019-01-03 19:44:35
  * @Description: draw by mouse
  -->
 <template>
@@ -176,6 +176,7 @@
           border-radius: 4px;
           background: #eee1d9;
           user-select:none;
+          box-shadow:3px 3px 3px 3px #333;
           .diveLine{
             height:@eraserInnerH + 2*@eraserPadding + 2;
             width:14px;
