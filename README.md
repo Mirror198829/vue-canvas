@@ -33,5 +33,10 @@ ctx.lineTo(300,100)
 ctx.closePath()
 ctx.stroke()
 ```
+## 问题
+#### `canvas`通过css设置宽高的时候，画布内容大小发生变化
+``` html
+#canvas{width:600px;height:300px} //这种写法导致，canvas等比例缩放，变成canvas图像默认值的2倍。
+```
 # canvas
 参考文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Basic_usage
