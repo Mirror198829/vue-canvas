@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-02 14:02:18
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-03 15:32:09
+ * @LastEditTime: 2019-01-03 15:34:19
  * @Description: draw by mouse
  -->
 <template>
@@ -47,7 +47,6 @@
           var ev = ev || window.event
           ctx.strokeStyle = '#fff'
           ctx.moveTo(ev.clientX - offsetL, ev.clientY - offsetT)
-          console.log(ev.clientX - offsetL)
           document.onmousemove = function (event) {
             var event = event || window.event
             ctx.lineTo(event.clientX - offsetL, event.clientY - offsetT)
