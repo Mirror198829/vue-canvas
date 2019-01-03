@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-02 14:02:18
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-03 15:52:52
+ * @LastEditTime: 2019-01-03 19:38:12
  * @Description: draw by mouse
  -->
 <template>
@@ -13,10 +13,12 @@
     </div>
     <div class="blackboard">
       <div class="innerBlackboard">
-        <canvas id="bbCanvas" width="600" height="330">
+        <canvas id="bbCanvas" width="600" height="340">
           浏览器不支持canvas
         </canvas>
-        <div class="blackEraser" @mousedown="eraserBlackboard()">
+        <!-- 黑板擦 -->
+        <div class="blackEraser" 
+          @mousedown="eraserBlackboard()">
           <div class="blackEraserInner"></div>
           <div class="diveLine"></div>
         </div>
@@ -43,17 +45,28 @@
         let [x1,y1] = [ev.clientX,ev.clientY]
         let t1 = $('.blackEraser').position().top
         let l1 = $('.blackEraser').position().left
-        console.log(l1)
+        let eraserW = $('.blackEraser').outerWidth()
+        let eraserH = $('.blackEraser').outerHeight()
         document.onmousemove = (ev) => {
           var ev =  ev || window.event
           let [x2,y2] = [ev.clientX,ev.clientY]
           let [disX,disY] = [x2-x1,y2-y1]
           let t2 = t1 + disY
           let l2 = l1 + disX
+          let canvas = document.getElementById('bbCanvas')
+          let ctx = canvas.getContext('2d')
+          let [minX,maxX,minY,maxY] = [0,canvas.width,0,canvas.height]
+          //边界检测
+         console.log(eraserW)
+          l2 = l2 < minX ? minX : l2
+          l2 = l2 + eraserW  > maxX ? maxX - eraserW : l2
+          t2 = t2 < minY ? minY : t2
+          t2 = t2 + eraserH > maxY ? maxY - eraserH : t2
           $('.blackEraser').css({
             left:l2,
             top:t2
           })
+          ctx.clearRect(l2,t2,eraserW,eraserH) //橡皮擦删除区域
         }
         document.onmouseup = () => {
           document.onmousemove = null
@@ -67,7 +80,9 @@
         let offsetT = $('#bbCanvas').offset().top
         canvas.onmousedown = function (ev) {
           var ev = ev || window.event
+          ctx.save()
           ctx.strokeStyle = '#fff'
+          ctx.beginPath()
           ctx.moveTo(ev.clientX - offsetL, ev.clientY - offsetT)
           document.onmousemove = function (event) {
             var event = event || window.event
@@ -75,6 +90,7 @@
             ctx.stroke()
           }
           document.onmouseup = () => {
+            ctx.restore()
             document.onmousemove = null
             document.onmouseoup = null
           }
@@ -154,16 +170,17 @@
           position: absolute;
           bottom: @woodH + 5;
           left:5px;
+          z-index:10;
           height:@eraserInnerH;
           padding: @eraserPadding;
           border-radius: 4px;
           background: #eee1d9;
+          user-select:none;
           .diveLine{
             height:@eraserInnerH + 2*@eraserPadding + 2;
             width:14px;
             background:#d3cdad;
             position: absolute;
-            z-index:10;
             top:50%;
             left:50%;
             transform:translate(-50%,-50%);
