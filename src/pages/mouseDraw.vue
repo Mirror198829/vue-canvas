@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-02 14:02:18
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-02 16:39:18
+ * @LastEditTime: 2019-01-03 15:32:09
  * @Description: draw by mouse
  -->
 <template>
@@ -13,9 +13,13 @@
     </div>
     <div class="blackboard">
       <div class="innerBlackboard">
-        <canvas id="bbCanvas" width="600" height="300">
+        <canvas id="bbCanvas" width="600" height="330">
           浏览器不支持canvas
         </canvas>
+        <div class="blackEraser">
+          <div class="blackEraserInner"></div>
+          <div class="diveLine"></div>
+        </div>
       </div>
       <div class="woodBase"></div>
     </div>
@@ -38,21 +42,21 @@
         let canvas = document.getElementById('bbCanvas')
         let ctx = canvas.getContext('2d')
         let offsetL = $('#bbCanvas').offset().left
-        let offsetT = $('#bbCanvas').offset().top         
-        canvas.onmousedown = function(ev){
-            var ev = ev || window.event
-            ctx.strokeStyle = '#fff'
-            ctx.moveTo(ev.clientX - offsetL,ev.clientY - offsetT)
-            console.log(ev.clientX - offsetL)
-            document.onmousemove = function(event) {
-               var event = event || window.event
-               ctx.lineTo(event.clientX - offsetL,event.clientY - offsetT)
-               ctx.stroke() 
-            }
-            document.onmouseup = ()=>{
-                document.onmousemove = null
-                document.onmouseoup = null
-            }
+        let offsetT = $('#bbCanvas').offset().top
+        canvas.onmousedown = function (ev) {
+          var ev = ev || window.event
+          ctx.strokeStyle = '#fff'
+          ctx.moveTo(ev.clientX - offsetL, ev.clientY - offsetT)
+          console.log(ev.clientX - offsetL)
+          document.onmousemove = function (event) {
+            var event = event || window.event
+            ctx.lineTo(event.clientX - offsetL, event.clientY - offsetT)
+            ctx.stroke()
+          }
+          document.onmouseup = () => {
+            document.onmousemove = null
+            document.onmouseoup = null
+          }
         }
       }
     },
@@ -80,6 +84,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
+
     .ropeWrap {
       margin-top: 50px;
       position: relative;
@@ -91,7 +96,7 @@
       .ropeItem {
         height: 5px;
         flex: 1;
-        background: #e0b19f;
+        background: #a6a394;
 
         &:last-child {
           transform: rotate(25deg);
@@ -111,18 +116,48 @@
       background: #be7840;
       padding: @paddingW;
       box-shadow: -10px 10px 5px #59351a;
-      @innerH: 330px;
+      @innerH: 360px;
 
       .innerBlackboard {
+        position: relative;
         width: @innerW;
         height: @innerH;
-        background: #333;
+        background: #5f7479;
         border-radius: 4px;
 
-        #bbCanvas {
-         
+        .blackEraser {
+          @eraserPadding:6px;
+          @eraserInnerH:28px;
+          @eraserInnerW:53px;
+          cursor: pointer;
+          position: absolute;
+          bottom: @woodH + 5;
+          left:5px;
+          padding: @eraserPadding;
+          border-radius: 4px;
+          background: #eee1d9;
+          .diveLine{
+            height:@eraserInnerH + 2*@eraserPadding + 2;
+            width:14px;
+            background:#d3cdad;
+            position: absolute;
+            z-index:10;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            box-shadow:1px 0 1px #8a8679; 
+          }
+          .blackEraserInner {
+            width:@eraserInnerW;
+            height:@eraserInnerH;
+            border-radius: 4px;
+            background: #fef9f3;
+          }
         }
+
+        #bbCanvas {}
       }
+
       .woodBase {
         position: absolute;
         height: @woodH;
