@@ -8,6 +8,7 @@
         <el-menu-item index="/mouseDraw">小黑板</el-menu-item>
         <el-menu-item index="/heart">heart</el-menu-item>
         <el-menu-item index="/time">会动的时钟</el-menu-item>
+        <el-menu-item index="/clock">时钟</el-menu-item>
         <el-menu-item index="/progress">进度条</el-menu-item>
       </el-menu>
     </header>
