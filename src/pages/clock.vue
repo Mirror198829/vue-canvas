@@ -2,12 +2,12 @@
  * @Author: caojing
  * @Date: 2019-01-04 14:51:43
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-04 14:51:51
+ * @LastEditTime: 2019-01-07 14:52:11
  * @Description: clock
  -->
 <template>
 <div>
-    123
+     <canvas id="clock" width="400" height="400"></canvas>           
 </div>
 </template>
 
@@ -23,10 +23,14 @@ export default {
 
   },
   methods:{
-
+    initCanvas(){
+      let canvas = document.getElementById('clock')
+      let ctx = canvas.getContext('2d')
+      
+    }
   },
   mounted(){
-
+    this.initCanvas()
   },
   created(){}
 }

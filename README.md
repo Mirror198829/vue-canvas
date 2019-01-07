@@ -33,6 +33,11 @@ ctx.lineTo(300,100)
 ctx.closePath()
 ctx.stroke()
 ```
+## 绘制园
+`arc(x,y,半径,起始弧度，结束弧度，旋转方向)`  
+  -x,y：起始位置  
+  -弧度与角度的关系：弧度 = 角度*Math.PI/180  
+  -旋转方向：顺时针（默认:false）、逆时针(true) 
 ## 问题
 #### `canvas`通过css设置宽高的时候，画布内容大小发生变化
 ``` html
