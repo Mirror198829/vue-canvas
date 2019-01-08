@@ -25,7 +25,7 @@ ctx.lineTo(200,200)
 ctx.lineTo(300,100)
 ctx.closePath()
 ctx.fill()
-ctx.restore() // 与save()呼应
+ctx.restore() // 与save()呼应，恢复路径
 //2nd part
 ctx.beginPath()
 ctx.moveTo(100,200)
