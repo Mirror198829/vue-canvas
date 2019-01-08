@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-04 14:51:43
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-08 11:32:32
+ * @LastEditTime: 2019-01-08 19:43:31
  * @Description: clock
  -->
 <template>
@@ -16,15 +16,16 @@
     name: '',
     data() {
       return {
-
+        timer:null
       }
     },
     components: {
 
     },
     methods: {
-      initCanvas(ctx) {
+      initCanvas() {
         let canvas = document.getElementById('clock')
+        let ctx = canvas.getContext('2d')
         let [x, y, r] = [200, 200, 120]
         let oDate = new Date()
         let oHours = oDate.getHours()
@@ -80,15 +81,18 @@
       }
     },
     mounted() {
-      let canvas = document.getElementById('clock')
-      let ctx = canvas.getContext('2d')
-      this.initCanvas(ctx)
-      setInterval(() => {
-        this.initCanvas(ctx)
+      
+      this.initCanvas()
+      this.timer = setInterval(() => {
+        this.initCanvas()
       }, 1000)
 
     },
-    created() {}
+    created() {},
+    beforeDestroy() {
+      clearInterval(this.timer)
+      this.timer = null
+    },
   }
 
 </script>
