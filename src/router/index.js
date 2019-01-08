@@ -5,6 +5,7 @@ import Time from '@/pages/time'
 import Progress from '@/pages/progress'
 import MouseDraw from '@/pages/mouseDraw'
 import Clock from '@/pages/clock'
+import TransformDemo from '@/pages/TransformDemo'
 
 Vue.use(Router)
 
@@ -38,8 +39,13 @@ export default new Router({
     },
     {
       path:'/clock',
-      name:Clock,
+      name:'Clock',
       component:Clock
+    },
+    {
+      path:'/transformDemo',
+      name:'TransformDemo',
+      component:TransformDemo
     }
   ]
 })

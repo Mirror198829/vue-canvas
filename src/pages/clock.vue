@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-04 14:51:43
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-07 16:02:31
+ * @LastEditTime: 2019-01-08 11:32:32
  * @Description: clock
  -->
 <template>
@@ -39,6 +39,7 @@
         this.drawLine(ctx, x, y, 10 / 20 * r, 5, oHoursValue) //时针
         this.drawLine(ctx, x, y, 13 / 20 * r, 3, oMinValue) //分针
         this.drawLine(ctx, x, y, 18 / 20 * r, 1, oSenValue) //秒针
+        this.drawDotted(ctx,x,y)
       },
       drawHandScale(ctx, x, y, r, num, lineW, delR) {
         let avgRad = 360 / num
@@ -68,6 +69,14 @@
         ctx.arc(x, y, r, rad, rad, false)
         ctx.closePath()
         ctx.stroke()
+      },
+      drawDotted(ctx,x,y){
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc(x,y,6,0,360,false)
+        ctx.closePath()
+        ctx.fill()
+        ctx.restore()
       }
     },
     mounted() {
