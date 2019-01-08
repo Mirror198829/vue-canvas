@@ -10,7 +10,7 @@
 `beginPath`:开始绘制路径  
 `moveTo`:移动到绘制的新目标点  
 `lineTo`: 新的目标点  
-`closePath`:结束绘制路径，闭合，可以作为起止点闭合的连接  
+`closePath`:关闭路径，闭合，可以作为起止点闭合的连接  
 `save`
   
 `ctx.rect(100,100,100,100)`:绘制一个方块路径
@@ -25,7 +25,7 @@ ctx.lineTo(200,200)
 ctx.lineTo(300,100)
 ctx.closePath()
 ctx.fill()
-ctx.restore() // 与save()呼应
+ctx.restore() // 与save()呼应，恢复路径
 //2nd part
 ctx.beginPath()
 ctx.moveTo(100,200)
@@ -48,6 +48,7 @@ ctx.stroke()
   —— 偏移:从起始点为基准点，移动当前坐标位置  
 ## rotate  
   —— 旋转：参数为弧度  
+  围绕画布（0，0）进行旋转
 ## scale  
   —— 缩放
 ## 问题
