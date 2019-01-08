@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-08 11:25:47
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-08 16:33:59
+ * @LastEditTime: 2019-01-08 19:33:30
  * @Description: canvas变换示例
  -->
 <template>
@@ -92,23 +92,25 @@
         ctx.closePath()
         ctx.restore()
       },
-      initC4(){
+      initC4() {
         let c4 = document.getElementById('c4')
         let ctx = c4.getContext('2d')
         let num = 0
-      ctx.translate(105,105)
-        setInterval(()=>{
-        num ++
-        ctx.save()
-        ctx.beginPath()
-        ctx.clearRect(-105,-105,c4.width,c4.height)
-        ctx.rotate( num *Math.PI/ 180)
-      ctx.translate(-40,-40)
-      ctx.fillStyle = "yellow"
-        ctx.fillRect(0,0,100,100)
-        ctx.closePath()
-        ctx.restore()
-        },10)  
+        let [width,height] = [100,100]
+        
+        setInterval(() => {
+          num++
+          ctx.save()
+          ctx.beginPath()
+          ctx.clearRect(0, 0, c4.width, c4.height)         
+          ctx.translate(this.canvas.width/2,this.canvas.height/2)
+          ctx.rotate(num * Math.PI / 180)
+          ctx.translate(-width/2,-height/2)
+          ctx.fillStyle = "yellow"
+          ctx.fillRect(0, 0, width, height)
+          ctx.closePath()
+          ctx.restore()
+        }, 10)
       }
     },
     mounted() {
@@ -140,14 +142,14 @@
     width: 1100px;
     display: flex;
     align-items: start;
-    justify-content:start;
-    flex-wrap:wrap;
+    justify-content: start;
+    flex-wrap: wrap;
   }
 
   .canvasItem {
     background: #fff;
-    width:250px;
-    margin:10px;
+    width: 250px;
+    margin: 10px;
   }
 
 </style>
