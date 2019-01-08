@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2018-11-30 17:02:32
  * @LastEditors: caojing
- * @LastEditTime: 2018-12-14 14:04:45
+ * @LastEditTime: 2019-01-08 19:53:25
  * @Description: 时间的canvas
  -->
 <template>
@@ -176,10 +176,10 @@
         })
       },
       bindWindow(){
-        window.onblur = ()=>{
+        window.onblur = () =>{
           clearInterval(this.timer)
         }
-        window.onfocus = ()=>{
+        window.onfocus = () =>{
           clearInterval(this.timer)
           this.initCanvas()
         }
@@ -195,7 +195,11 @@
       this.initConfig()
       this.initCanvas()
     },
-    created() {}
+    created() {},
+    destroyed() {
+      clearInterval(this.timer)
+      this.timer = null
+    },
   }
 
 </script>
