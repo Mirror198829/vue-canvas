@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-08 11:25:47
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-08 20:24:44
+ * @LastEditTime: 2019-01-09 11:24:52
  * @Description: canvas变换示例
  -->
 <template>
@@ -26,6 +26,9 @@
       <div class="canvasItem">
         <canvas :width="canvas.width" :height="canvas.height" id="c5"></canvas>
       </div>
+      <div class="canvasItem">
+        <canvas :width="canvas.width" :height="canvas.height" id="c6"></canvas>
+      </div>
     </div>
   </div>
 
@@ -47,7 +50,8 @@
           height: 80
         },
         timer: null,
-        timer1: null
+        timer1: null,
+        timer2: null
       }
     },
     components: {
@@ -141,6 +145,38 @@
           ctx.closePath()
           ctx.restore()
         }, 10)
+      },
+      initC6() {
+        let c6 = document.getElementById('c6')
+        let ctx = c6.getContext('2d')
+        let [x, y] = [0, 0]
+
+        let [width, height] = [50, 50]
+        let isPlus = true
+        this.timer2 = setInterval(() => {
+
+          if (x < c6.width - width && y == 0) {
+            x++
+          } else if (x == c6.width - width && y < c6.height - height) {
+            x = c6.width - width
+            y++
+          } else if (y >= c6.height - height && x > 0) {
+            y = c6.height - height
+            x--
+          } else if (x <= 0 && y <= c6.height - height) {
+            x = 0
+            y--
+          }
+
+          ctx.save()
+          ctx.beginPath()
+          ctx.clearRect(0, 0, c6.width, c4.height)
+
+          ctx.fillStyle = "#DE3A00"
+          ctx.fillRect(x, y, width, height)
+          ctx.closePath()
+          ctx.restore()
+        }, 10)
       }
     },
     mounted() {
@@ -150,6 +186,7 @@
       this.initC3() //放大
       this.initC4() //围绕中心旋转
       this.initC5() //自动选装放大
+      this.initC6() //自动移动
     },
     created() {},
     destroyed() {
@@ -187,6 +224,7 @@
     background: #fff;
     width: 250px;
     margin: 10px;
+    height:250px;
   }
 
 </style>
