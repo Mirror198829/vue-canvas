@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-08 11:25:47
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-09 11:24:52
+ * @LastEditTime: 2019-01-09 11:32:20
  * @Description: canvas变换示例
  -->
 <template>
@@ -170,7 +170,7 @@
 
           ctx.save()
           ctx.beginPath()
-          ctx.clearRect(0, 0, c6.width, c4.height)
+          ctx.clearRect(0, 0, c6.width, c6.height)
 
           ctx.fillStyle = "#DE3A00"
           ctx.fillRect(x, y, width, height)
