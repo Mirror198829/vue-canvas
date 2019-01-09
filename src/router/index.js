@@ -14,7 +14,7 @@ export default new Router({
     {
       path: '/',
       redirect:{
-        name:'Heart'
+        name:'TransformDemo'
       }
     },
     {
