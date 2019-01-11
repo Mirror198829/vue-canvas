@@ -43,6 +43,8 @@ ctx.stroke()
 * arcTo(x1,y1,x2,y2,r)  
    —— 第一组坐标、第二组坐标、半径  
    —— arcTo() 方法在画布上创建介于两个切线之间的弧/曲线。
+## 插入图片
+drawImage(olmg,x,y,w,h)
 # 变换
 ## translate  
   —— 偏移:从起始点为基准点，移动当前坐标位置  

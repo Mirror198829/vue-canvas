@@ -6,6 +6,7 @@ import Progress from '@/pages/progress'
 import MouseDraw from '@/pages/mouseDraw'
 import Clock from '@/pages/clock'
 import TransformDemo from '@/pages/TransformDemo'
+import ImgDemo from '@/pages/imgDemo'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path:'/transformDemo',
       name:'TransformDemo',
       component:TransformDemo
+    },
+    {
+      path:'/imgDemo',
+      name:'ImgDemo',
+      component:ImgDemo
     }
   ]
 })
