@@ -7,7 +7,6 @@
  -->
 <template>
 <div class="imgDemo">
-    <el-button> - </el-button>
     <input type="button" value="->">
     <canvas width="400" height="400" id="c1"></canvas>
 </div>
