@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-11 16:22:52
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-14 17:33:31
+ * @LastEditTime: 2019-01-14 17:35:21
  * @Description:图片处理相关demo 
  -->
 <template>
@@ -30,11 +30,11 @@ export default {
       let yImg = new Image()
       yImg.onload = ()=>{
         ctx.drawImage(yImg,30,30,100,50)
+        let bg = ctx.createPattern(yImg,'repeat')
+        ctx.fillStyle = bg
+        ctx.fillRect(20,100,400,300) 
       }
-      yImg.src = 'src/assets/logo.png' 
-      let bg = ctx.createPattern(yImg,'repeat')
-      ctx.fillStyle = bg
-      ctx.fillRect(20,100,400,300) 
+      yImg.src = 'src/assets/logo.png'   
     }
   },
   mounted(){
