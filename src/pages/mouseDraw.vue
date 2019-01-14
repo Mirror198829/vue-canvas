@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-02 14:02:18
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-03 20:00:16
+ * @LastEditTime: 2019-01-14 17:12:43
  * @Description: draw by mouse
  -->
 <template>
@@ -58,7 +58,6 @@
           let ctx = canvas.getContext('2d')
           let [minX,maxX,minY,maxY] = [0,canvas.width,0,canvas.height]
           //边界检测
-         console.log(eraserW)
           l2 = l2 < minX ? minX : l2
           l2 = l2 + eraserW  > maxX ? maxX - eraserW : l2
           t2 = t2 < minY ? minY : t2
