@@ -10,8 +10,8 @@
     data() {
       return {
         canvas: {
-          width: 400,
-          height: 400
+          width: 430,
+          height: 430
         },
         L: 0, //基础半径
         timer:null
