@@ -2,14 +2,12 @@
  * @Author: caojing
  * @Date: 2019-01-11 16:22:52
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-15 20:37:12
+ * @LastEditTime: 2019-01-16 14:35:35
  * @Description:图片处理相关demo 
  -->
 <template>
   <div class="imgDemo">
-    <input type="button" value="->">
-    <canvas width="400" height="400" id="c1"></canvas>
-    <canvas width="400" height="400" id="c2"></canvas>
+    <canvas width="400" height="400" id="imgC1"></canvas>
   </div>
 </template>
 
@@ -26,7 +24,7 @@
     },
     methods: {
       initCanvas() {
-        let c = document.getElementById('c1')
+        let c = document.getElementById('imgC1')
         let ctx = c.getContext('2d')
         let yImg = new Image()
         yImg.onload = () => {
@@ -36,35 +34,10 @@
           ctx.fillRect(20, 100, 400, 300)
         }
         yImg.src = 'src/assets/logo.png'
-      },
-      drawTime() {
-        let c = document.getElementById('c2')
-        let ctx = c.getContext('2d')
-        let L = 150
-        let [x1, y1] = [200, 200]
-        let L2 = 170
-
-        for (let i = 0; i < 12; i++) {
-          let angel = -90 + i * 30
-          let [x2, y2] = [x1 + Math.cos(angel * Math.PI / 180) * L, y1 + Math.sin(angel * Math.PI / 180) * L]
-          let [x3, y3] = [x1 + Math.cos(angel * Math.PI / 180) * L2, y1 + Math.sin(angel * Math.PI / 180) * L2]
-          ctx.arc(200, 200, 20, 0, 360 * Math.PI / 180)
-          ctx.fill()
-          ctx.save()
-          ctx.beginPath()
-          ctx.lineWidth = 10;
-          ctx.lineJoin = "round";
-          ctx.moveTo(x2, y2);
-          ctx.lineTo(x3, y3);
-          ctx.closePath()
-          ctx.stroke()
-        }
-
       }
     },
     mounted() {
       this.initCanvas()
-      this.drawTime()
     },
     created() {}
   }
