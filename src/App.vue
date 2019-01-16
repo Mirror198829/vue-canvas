@@ -10,7 +10,8 @@
         <el-menu-item index="/time">会动的时钟</el-menu-item>
         <el-menu-item index="/transformDemo">变换</el-menu-item>
         <el-menu-item index="/clock">时钟</el-menu-item>
-        <el-menu-item index="/imgDemo">图片展示</el-menu-item>
+        <el-menu-item index="/coolClock">炫酷时钟</el-menu-item>
+        <!-- <el-menu-item index="/imgDemo">图片展示</el-menu-item> -->
         <!-- <el-menu-item index="/progress">进度条</el-menu-item> -->
       </el-menu>
     </header>
