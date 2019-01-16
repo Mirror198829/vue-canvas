@@ -13,7 +13,8 @@
           width: 430,
           height: 430
         },
-        L: 0 //基础半径
+        L: 0, //基础半径
+        timer:null
       }
     },
     components: {
@@ -112,11 +113,16 @@
       }
     },
     mounted() {
-      setInterval(() => {
+      this.drawCoolClock()
+      this.timer = setInterval(() => {
         this.drawCoolClock()
-      }, 1000)
+      }, 30)
     },
-    created() {}
+    created() {},
+    destroyed() {
+      clearInterval(this.timer)
+      this.timer = null
+    },
   }
 
 </script>

@@ -16,7 +16,7 @@ export default new Router({
     {
       path: '/',
       redirect:{
-        name:'TransformDemo'
+        name:'CoolClock'
       }
     },
     {
