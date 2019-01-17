@@ -1,3 +1,11 @@
+<!--
+ * @Author: caojing
+ * @Date: 2019-01-16 14:40:40
+ * @LastEditors: caojing
+ * @LastEditTime: 2019-01-17 15:26:23
+ * @Description:炫酷时钟 
+ -->
+
 <template>
   <div id="coolClockWrap">
     <canvas id="coolClockCanvas" :width="canvas.width" :height="canvas.height"></canvas>
