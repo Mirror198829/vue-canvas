@@ -63,4 +63,69 @@ createPattern(oImg,平铺方式)
 ```
 canvas标签内设置的宽高才是真正画布的宽高
 # canvas
-参考文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Basic_usage
+参考文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Basic_usage  
+
+
+# 作品说明  
+![avatar](https://mirror198829.github.io/static/github/clock.png)
+## canvas绘制步骤思路
+1. 绘制表盘的（时针）刻度  
+2. 绘制表盘的（分针）刻度  
+3. 绘制表盘数字刻度  
+4. 绘制时针、分针、秒针  
+5. 绘制中心点  
+6. 绘制秒针的尾部（优化部分）  
+## 实现所需要的知识点  
+* 画圆 `ctx.arc(x,y,r,开始弧度,结束弧度)`
+* 画线  `ctx.moveTo(x,y)` `ctx.lineTo(x1,y1)`
+* 直角坐标系的计算方法  
+    `x = x0 + Math.cos(角度)*长度`  
+    `y = y0 + Math.sin(角度)*长度`   
+* 定时器   
+## 如何实现（时针）刻度盘的绘制  
+思路：  
+1. 已知直角坐标系的中心点坐标（x0,y0）即canvas画布中心点位置。设定L = 长度  
+2. 计算出时针的角度，通过直角坐标系的计算方法便得出时针刻度的位置。 （12个刻度进行循环便可全部绘制） 
+计算时针角度的方法：  
+`-90 + i * (360 / 12)`
+代码如下：
+``` javascript
+drawHoursScale(ctx, x0, y0, scaleNum, scaleW, maxL, minL) {
+    for (let i = 0; i < scaleNum; i++) {
+      let angel = -90 + i * (360 / scaleNum) //角度
+      let [x1, y1] = [x0 + Math.cos(angel * Math.PI / 180) * maxL, y0 + Math.sin(angel * Math.PI / 180) * maxL]
+      let [x2, y2] = [x0 + Math.cos(angel * Math.PI / 180) * minL, y0 + Math.sin(angel * Math.PI / 180) * minL]
+      ctx.save()
+      ctx.beginPath()
+      ctx.lineWidth = scaleW
+      ctx.lineCap = "round"
+      ctx.moveTo(x1, y1)
+      ctx.lineTo(x2, y2)
+      ctx.stroke()
+      ctx.closePath()
+      ctx.restore()
+    }
+   }
+```
+## 如何绘制时针/分针/秒针  
+思路：  
+1. 已知指针的起点坐标（x0,y0）  
+2. 计算出指针的终点坐标（x1,y1）,便可通过`lineTo`的方式进行绘制  
+如何计算终点坐标 与绘制刻度的思想式类似的  
+
+代码如下：
+``` javascript
+drawTimeNeedle(ctx, x0, y0, lineW, L, angel, color = '#000') {
+    let [x, y] = [x0 + Math.cos(angel * Math.PI / 180) * L, y0 + Math.sin(angel * Math.PI / 180) * L]
+    ctx.save()
+    ctx.beginPath()
+    ctx.strokeStyle = color
+    ctx.lineWidth = lineW
+    ctx.lineCap = "round"
+    ctx.moveTo(x0, y0)
+    ctx.lineTo(x, y)
+    ctx.stroke()
+    ctx.closePath()
+    ctx.restore()
+  },
+```
