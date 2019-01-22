@@ -11,12 +11,12 @@
         <el-menu-item index="/transformDemo">变换</el-menu-item>
         <!-- <el-menu-item index="/clock">时钟</el-menu-item> -->
         <el-menu-item index="/coolClock">炫酷时钟</el-menu-item>
-        <!-- <el-menu-item index="/imgDemo">图片展示</el-menu-item> -->
+        <el-menu-item index="/imgDemo">背景色彩</el-menu-item>
         <!-- <el-menu-item index="/progress">进度条</el-menu-item> -->
       </el-menu>
     </header>
     <router-view class="routerMain" />
-    <v-footer></v-footer>
+    <!-- <v-footer></v-footer> -->
   </div>
 </template>
 

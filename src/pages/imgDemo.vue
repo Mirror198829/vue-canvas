@@ -2,12 +2,13 @@
  * @Author: caojing
  * @Date: 2019-01-11 16:22:52
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-16 14:35:35
- * @Description:图片处理相关demo 
+ * @LastEditTime: 2019-01-22 10:25:05
+ * @Description:图片图像
  -->
 <template>
   <div class="imgDemo">
-    <canvas width="400" height="400" id="imgC1"></canvas>
+    <canvas :width="width" :height="height" id="imgC1" class="imgC"></canvas>
+    <canvas :width="width" :height="height" id="imgC2" class="imgC"></canvas>
   </div>
 </template>
 
@@ -16,28 +17,46 @@
     name: '',
     data() {
       return {
-
+        width: 250,
+        height: 250
       }
     },
     components: {
 
     },
     methods: {
-      initCanvas() {
+      drawImg() {
         let c = document.getElementById('imgC1')
         let ctx = c.getContext('2d')
         let yImg = new Image()
         yImg.onload = () => {
-          ctx.drawImage(yImg, 30, 30, 100, 50)
+          ctx.drawImage(yImg, 0, 0, 100, 50)
           let bg = ctx.createPattern(yImg, 'repeat')
           ctx.fillStyle = bg
-          ctx.fillRect(20, 100, 400, 300)
+          ctx.fillRect(0, 50, 400, 300)
         }
         yImg.src = 'src/assets/logo.png'
+      },
+      dramRadialGradient() {
+        let c = document.getElementById("imgC2");
+        let ctx = c.getContext("2d");
+        let [x0,y0,r] = [this.width / 2 , this.height / 2, 100]
+        let grd = ctx.createRadialGradient(x0, y0, r/2, x0, y0, r);
+        grd.addColorStop(0, "white")
+        grd.addColorStop(1, "red")
+
+        // Fill with gradient
+        ctx.setLineDash([10, 15])
+        ctx.lineWidth=5;
+        ctx.fillStyle = grd
+        ctx.arc(x0, y0, r, 0, 360 * Math.PI / 180)
+        ctx.fill()
+        ctx.stroke()
       }
     },
     mounted() {
-      this.initCanvas()
+      this.drawImg()
+      this.dramRadialGradient() //绘制一个圆形渐变
     },
     created() {}
   }
@@ -52,10 +71,14 @@
     width: 100%;
     height: 100%;
     background: #C2D3E5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  canvas {
-    background: #fff
+  .imgC {
+    background: #fff;
+    margin: 10px
   }
 
 </style>
