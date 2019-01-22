@@ -70,6 +70,11 @@ createPattern(oImg,平铺方式)
 | y1 | 渐变结束圆的y坐标 |
 | r1 | 结束圆的半径 |
 
+# 文本
+`measureText()`  
+-- measureText(str).width 只有宽度，没有高度  
+-- 作用：文字居中
+
 ## 问题
 #### `canvas`通过css设置宽高的时候，画布内容大小发生变化
 ``` html
