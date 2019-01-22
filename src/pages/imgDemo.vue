@@ -2,14 +2,16 @@
  * @Author: caojing
  * @Date: 2019-01-11 16:22:52
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-22 10:55:14
+ * @LastEditTime: 2019-01-22 11:36:27
  * @Description:图片图像
  -->
 <template>
   <div class="imgDemo">
     <canvas title="设置canvas背景" :width="width" :height="height" id="imgC1" class="imgC"></canvas>
     <canvas title="径向渐变" :width="width" :height="height" id="imgC2" class="imgC"></canvas>
-    <canvas title="线性渐变" :width="width" :height="height" id="imgC3" class="imgC"></canvas>
+    <canvas title="线性渐变横向" :width="width" :height="height" id="l1" class="imgC"></canvas>
+    <canvas title="线性渐变纵向" :width="width" :height="height" id="l2" class="imgC"></canvas>
+    <canvas title="线性渐变对角线" :width="width" :height="height" id="l3" class="imgC"></canvas>
   </div>
 </template>
 
@@ -54,23 +56,47 @@
         ctx.fill()
         ctx.stroke()
       },
-      drawLinearGradient() {
-        let c = document.getElementById('imgC3')
+      drawLinearGradient1() {
+        let c = document.getElementById('l1')
         let ctx = c.getContext('2d')
         let [x0, y0] = [50, 80]
         let [width, height] = [150, 80]
         let [x1, y1] = [x0 + width, y0 + height]
-        let grd = ctx.createLinearGradient(x0, y0, x1, y1);
-        grd.addColorStop(0, "blue");
-        grd.addColorStop(1, "red");
+        let grd = ctx.createLinearGradient(x0, 0, x1, 0);
+        this.drawRect(ctx, x0, y0, width, height, grd)
+      },
+      drawLinearGradient2() {
+        let c = document.getElementById('l2')
+        let ctx = c.getContext('2d')
+        let [x0, y0] = [50, 80]
+        let [width, height] = [150, 80]
+        let [x1, y1] = [x0 + width, y0 + height]
+        let grd = ctx.createLinearGradient(x0, y0, x0, y1)
+        this.drawRect(ctx, x0, y0, width, height, grd)
+      },
+      drawLinearGradient3() {
+        let c = document.getElementById('l3')
+        let ctx = c.getContext('2d')
+        let [x0, y0] = [50, 80]
+        let [width, height] = [150, 80]
+        let [x1, y1] = [x0 + width, y0 + height]
+        let grd = ctx.createLinearGradient(x0, y0, x1, y1)
+        this.drawRect(ctx, x0, y0, width, height, grd)
+      },
+      drawRect(ctx, x, y, width, height, grd) {
+        grd.addColorStop(0, "blue")
+        grd.addColorStop(0.5, 'yellow')
+        grd.addColorStop(1, "red")
         ctx.fillStyle = grd
-        ctx.fillRect(x0, y0, width, height)
+        ctx.fillRect(x, y, width, height)
       }
     },
     mounted() {
       this.drawImg()
       this.dramRadialGradient() //绘制一个径向渐变
-      this.drawLinearGradient() //绘制一个线性渐变
+      this.drawLinearGradient1() //绘制一个线性渐变横向
+      this.drawLinearGradient2() //绘制一个线性纵向
+      this.drawLinearGradient3() //绘制一个线性对对角线
     },
     created() {}
   }
