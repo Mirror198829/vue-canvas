@@ -2,13 +2,14 @@
  * @Author: caojing
  * @Date: 2019-01-11 16:22:52
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-22 10:25:05
+ * @LastEditTime: 2019-01-22 10:55:14
  * @Description:图片图像
  -->
 <template>
   <div class="imgDemo">
-    <canvas :width="width" :height="height" id="imgC1" class="imgC"></canvas>
-    <canvas :width="width" :height="height" id="imgC2" class="imgC"></canvas>
+    <canvas title="设置canvas背景" :width="width" :height="height" id="imgC1" class="imgC"></canvas>
+    <canvas title="径向渐变" :width="width" :height="height" id="imgC2" class="imgC"></canvas>
+    <canvas title="线性渐变" :width="width" :height="height" id="imgC3" class="imgC"></canvas>
   </div>
 </template>
 
@@ -40,23 +41,36 @@
       dramRadialGradient() {
         let c = document.getElementById("imgC2");
         let ctx = c.getContext("2d");
-        let [x0,y0,r] = [this.width / 2 , this.height / 2, 100]
-        let grd = ctx.createRadialGradient(x0, y0, r/2, x0, y0, r);
+        let [x0, y0, r] = [this.width / 2, this.height / 2, 100]
+        let grd = ctx.createRadialGradient(x0, y0, r / 2, x0, y0, r);
         grd.addColorStop(0, "white")
         grd.addColorStop(1, "red")
 
         // Fill with gradient
         ctx.setLineDash([10, 15])
-        ctx.lineWidth=5;
+        ctx.lineWidth = 5;
         ctx.fillStyle = grd
         ctx.arc(x0, y0, r, 0, 360 * Math.PI / 180)
         ctx.fill()
         ctx.stroke()
+      },
+      drawLinearGradient() {
+        let c = document.getElementById('imgC3')
+        let ctx = c.getContext('2d')
+        let [x0, y0] = [50, 80]
+        let [width, height] = [150, 80]
+        let [x1, y1] = [x0 + width, y0 + height]
+        let grd = ctx.createLinearGradient(x0, y0, x1, y1);
+        grd.addColorStop(0, "blue");
+        grd.addColorStop(1, "red");
+        ctx.fillStyle = grd
+        ctx.fillRect(x0, y0, width, height)
       }
     },
     mounted() {
       this.drawImg()
-      this.dramRadialGradient() //绘制一个圆形渐变
+      this.dramRadialGradient() //绘制一个径向渐变
+      this.drawLinearGradient() //绘制一个线性渐变
     },
     created() {}
   }
