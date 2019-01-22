@@ -60,7 +60,9 @@ createPattern(oImg,平铺方式)
 # 背景色
 ## 径向渐变  
 `context.createRadialGradient(x0,y0,r0,x1,y1,r1)`  
+
 | 参数 | 描述 |
+|---|---|
 | x0 | 渐变开始圆的x坐标 |
 | y0 | 渐变开始圆的y坐标 |
 | r0 | 开始圆的半径 |
