@@ -2,14 +2,13 @@
  * @Author: caojing
  * @Date: 2019-01-23 16:26:01
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-23 17:38:35
+ * @LastEditTime: 2019-01-23 17:41:13
  * @Description: 像素处理
  -->
 <template>
   <div class="pixelWrap">
     <canvas :width="width" :height="height" class="pCanvas" id="p1"></canvas>
     <canvas :width="width" :height="height" class="pCanvas" id="p2"></canvas>
-  </div>
   </div>
 </template>
 
