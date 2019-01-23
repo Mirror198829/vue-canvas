@@ -70,6 +70,11 @@ createPattern(oImg,平铺方式)
 | y1 | 渐变结束圆的y坐标 |
 | r1 | 结束圆的半径 |
 
+# 文本
+`measureText()`  
+-- measureText(str).width 只有宽度，没有高度  
+-- 作用：文字居中
+
 ## 像素
 `getImageData(x,y,w,h)` 获取图像数据  
 `putImageData(获取图像,x,y)`设置新的图像数据  
