@@ -75,7 +75,7 @@ createPattern(oImg,平铺方式)
 -- measureText(str).width 只有宽度，没有高度  
 -- 作用：文字居中
 
-## 像素
+# 像素
 `getImageData(x,y,w,h)` 获取图像数据  
 `putImageData(获取图像,x,y)`设置新的图像数据  
 属性：  
