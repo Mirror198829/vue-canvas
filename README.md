@@ -81,7 +81,8 @@ createPattern(oImg,平铺方式)
 属性：  
 * data一个数组，包含每个像素的rgba四个值，注意每个值都是0~255之间的整数
 * width：一行的像素个数  
-* height：一列的像素个数
+* height：一列的像素个数  
+`createImageData(w,h)`  生成新的像素矩阵，初始值为全透明的黑色  
 
 ## 问题
 #### `canvas`通过css设置宽高的时候，画布内容大小发生变化
