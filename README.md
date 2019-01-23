@@ -70,6 +70,14 @@ createPattern(oImg,平铺方式)
 | y1 | 渐变结束圆的y坐标 |
 | r1 | 结束圆的半径 |
 
+## 像素
+`getImageData(x,y,w,h)` 获取图像数据  
+`putImageData(获取图像,x,y)`设置新的图像数据  
+属性：  
+* data一个数组，包含每个像素的rgba四个值，注意每个值都是0~255之间的整数
+* width：一行的像素个数  
+* height：一列的像素个数
+
 ## 问题
 #### `canvas`通过css设置宽高的时候，画布内容大小发生变化
 ``` html

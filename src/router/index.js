@@ -8,6 +8,7 @@ import Clock from '@/pages/clock'
 import TransformDemo from '@/pages/TransformDemo'
 import ImgDemo from '@/pages/imgDemo'
 import CoolClock from '@/pages/coolClock'
+import PixelDemo from '@/pages/pixelDemo'
 
 Vue.use(Router)
 
@@ -58,7 +59,11 @@ export default new Router({
       path:'/coolClock',
       name:'CoolClock',
       component:CoolClock
-
+    },
+    {
+      path:'/pixelDemo',
+      name:'PixelDemo',
+      component:PixelDemo
     }
   ]
 })
