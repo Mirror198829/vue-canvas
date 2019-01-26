@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-23 16:26:01
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-26 16:15:17
+ * @LastEditTime: 2019-01-26 16:16:42
  * @Description: 像素处理
  -->
 <template>
@@ -19,7 +19,8 @@
     data() {
       return {
         width: 300,
-        height: 300
+        height: 300,
+        timer:null
       }
     },
     components: {
@@ -133,7 +134,7 @@
     },
     mounted() {
       this.drawP1()
-      setInterval(() => {
+      this.timer = setInterval(() => {
         let max = 70
         let min = 10
         let NUM = Math.floor(Math.random() * (max - min + 1) + min);
@@ -142,7 +143,11 @@
       }, 1000)
       this.drawP3()
     },
-    created() {}
+    created() {},
+    destroyed() {
+      clearInterval(this.timer)
+      this.timer = null
+    },
   }
 
 </script>
