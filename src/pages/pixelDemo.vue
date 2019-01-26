@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-23 16:26:01
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-23 17:41:13
+ * @LastEditTime: 2019-01-26 14:51:36
  * @Description: 像素处理
  -->
 <template>
@@ -28,52 +28,68 @@
       drawP1() {
         let c = document.getElementById('p1')
         let context = c.getContext('2d')
-        let [x,y,width,height] = [0,0,50,50]
-        context.fillRect(x,y,width,height)
-        let imgData = context.getImageData(x, y, width, height);//获取区域内的所有像素值
-        context.putImageData(imgData,100,0);//获取到的像素放置在页面 100，50的位置 
+        let [x, y, width, height] = [0, 0, 50, 50]
+        context.fillRect(x, y, width, height)
+        let imgData = context.getImageData(x, y, width, height); //获取区域内的所有像素值
+        context.putImageData(imgData, 100, 0); //获取到的像素放置在页面 100，50的位置 
 
-        for(let i = 0; i< imgData.width * imgData.height;i++){
-          imgData.data[4*i] = 255
-          imgData.data[4*i + 1] = 0
-          imgData.data[4*i + 2] = 0
-          imgData.data[4*i + 3] = 100
+        for (let i = 0; i < imgData.width * imgData.height; i++) {
+          imgData.data[4 * i] = 255
+          imgData.data[4 * i + 1] = 0
+          imgData.data[4 * i + 2] = 0
+          imgData.data[4 * i + 3] = 100
         }
-        context.putImageData(imgData,200,0);
+        context.putImageData(imgData, 200, 0);
 
         let oImg2 = context.createImageData(100, 100)
-        for(let i = 0; i< oImg2.width * oImg2.height;i++){
-          oImg2.data[4*i] = 255
-          oImg2.data[4*i + 1] = 0
-          oImg2.data[4*i + 2] = 0
-          oImg2.data[4*i + 3] = 100
+        for (let i = 0; i < oImg2.width * oImg2.height; i++) {
+          oImg2.data[4 * i] = 255
+          oImg2.data[4 * i + 1] = 0
+          oImg2.data[4 * i + 2] = 0
+          oImg2.data[4 * i + 3] = 100
         }
-        context.putImageData(oImg2,50,100)
+        context.putImageData(oImg2, 50, 100)
       },
-      drawP2(){
-        let c= document.getElementById('p2')
-        let context=c.getContext("2d")
-        let str ="canvas"
-        let h = 60
-        context.font=h+'px impact';
-        context.textBaseline='top';
-        let w = context.measureText(str).width;
-        context.fillText(str, (c.width-w)/2, (c.height-h)/2);
-        let oImg = context.getImageData((c.width-w)/2, (c.height-h)/2, w, h);
-        let [max,min] = [w*h,0]
+      randomArr(iAll, iNow) {
         let arr = []
-        for(let i = 0; i< parseInt(w*h*0.5);i++){
-          arr.push(Math.floor(Math.random()*(max-min+1)+min))
+        let newArr = []
+        for (let i = 0; i < iAll; i++) {
+          arr.push(i)
         }
-        arr.forEach((item,key) => {
-          oImg.data[4*item+3] = 0
+        for (let i = 0; i < iNow; i++) {
+          let randomIndex = Math.floor(Math.random() * arr.length, 1)
+          newArr.push(arr.splice(randomIndex, 1))
+        }
+        return newArr
+      },
+      drawP2(NUM) {
+        let c = document.getElementById('p2')
+        let context = c.getContext("2d")
+        let str = "FRONT END"
+        let h = 60
+        context.clearRect(0, 0, c.width, c.height);
+        context.font = h + 'px impact';
+        context.textBaseline = 'top';
+        let w = context.measureText(str).width;
+        context.fillText(str, (c.width - w) / 2, (c.height - h) / 2);
+        let oImg = context.getImageData((c.width - w) / 2, (c.height - h) / 2, w, h);
+        let [max, min] = [w * h, 0]
+        let newArr = this.randomArr(w * h, w * h * NUM)
+        newArr.forEach((item, key) => {
+          oImg.data[4 * item + 3] = 0
         })
-       context.putImageData(oImg,(c.width-w)/2,50)  
+        context.putImageData(oImg, (c.width - w) / 2, 50)
       }
     },
     mounted() {
       this.drawP1()
-      this.drawP2()
+      setInterval(() => {
+        let max = 70
+        let min = 10
+        let NUM = Math.floor(Math.random() * (max - min + 1) + min);
+        NUM = NUM / 100
+        this.drawP2(NUM)
+      }, 1000)
     },
     created() {}
   }
@@ -95,7 +111,7 @@
 
   .pCanvas {
     background: #fff;
-    margin:10px;
+    margin: 10px;
   }
 
 </style>
