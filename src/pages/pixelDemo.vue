@@ -2,13 +2,14 @@
  * @Author: caojing
  * @Date: 2019-01-23 16:26:01
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-26 14:51:36
+ * @LastEditTime: 2019-01-26 16:15:17
  * @Description: 像素处理
  -->
 <template>
   <div class="pixelWrap">
     <canvas :width="width" :height="height" class="pCanvas" id="p1"></canvas>
     <canvas :width="width" :height="height" class="pCanvas" id="p2"></canvas>
+    <canvas :width="width" :height="height" class="pCanvas" id="p3"></canvas>
   </div>
 </template>
 
@@ -48,7 +49,7 @@
           oImg2.data[4 * i + 2] = 0
           oImg2.data[4 * i + 3] = 100
         }
-        context.putImageData(oImg2, 50, 100)
+        context.putImageData(oImg2, 100, 100)
       },
       randomArr(iAll, iNow) {
         let arr = []
@@ -61,6 +62,21 @@
           newArr.push(arr.splice(randomIndex, 1))
         }
         return newArr
+      },
+      randomAllArr(iAll, iNow) {
+        let arr = []
+        let allArr = []
+        for (let i = 0; i < iAll; i++) {
+          arr.push(i)
+        }
+        for (let i = 0; i < iAll / iNow; i++) {
+          let newArr = []
+          for (let j = 0; j < iNow; j++) {
+            newArr.push(arr.splice(Math.random() * arr.length, 1))
+          }
+          allArr.push(newArr)
+        }
+        return allArr
       },
       drawP2(NUM) {
         let c = document.getElementById('p2')
@@ -79,6 +95,40 @@
           oImg.data[4 * item + 3] = 0
         })
         context.putImageData(oImg, (c.width - w) / 2, 50)
+      },
+      drawP3() {
+        let c = document.getElementById('p3')
+        let context = c.getContext("2d")
+        let str = "前端"
+        let h = 80
+        context.clearRect(0, 0, c.width, c.height);
+        context.font = h + 'px impact';
+        context.textBaseline = 'top';
+        context.fillStyle = "red"
+        let w = context.measureText(str).width;
+        context.fillText(str, (c.width - w) / 2, (c.height - h) / 2);
+        let oImg = context.getImageData((c.width - w) / 2, (c.height - h) / 2, w, h + 80);
+        let newImg = context.createImageData(w, h + 80)
+        context.clearRect(0, 0, c.width, c.height)
+        let [max, min] = [w * h, 0]
+        let arr = this.randomAllArr(w * h, w * h / 5)
+        let iNow = 0
+        let timer = setInterval(() => {
+          for (let i = 0; i < arr[iNow].length; i++) {
+            newImg.data[4 * arr[iNow][i]] = oImg.data[4 * arr[iNow][i]]
+            newImg.data[4 * arr[iNow][i] + 1] = oImg.data[4 * arr[iNow][i] + 1]
+            newImg.data[4 * arr[iNow][i] + 2] = oImg.data[4 * arr[iNow][i] + 2]
+            newImg.data[4 * arr[iNow][i] + 3] = oImg.data[4 * arr[iNow][i] + 3]
+          }
+          context.putImageData(newImg, (c.width - w) / 2, (c.height - h) / 2)
+          if (iNow == 4) {
+            iNow = 0
+            clearInterval(timer)
+          } else {
+            iNow++
+          }
+        }, 1000)
+
       }
     },
     mounted() {
@@ -90,6 +140,7 @@
         NUM = NUM / 100
         this.drawP2(NUM)
       }, 1000)
+      this.drawP3()
     },
     created() {}
   }
