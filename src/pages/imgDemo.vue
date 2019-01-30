@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-11 16:22:52
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-23 16:28:58
+ * @LastEditTime: 2019-01-30 10:34:52
  * @Description:图片图像
  -->
 <template>
@@ -38,7 +38,7 @@
           ctx.fillStyle = bg
           ctx.fillRect(0, 50, 400, 300)
         }
-        yImg.src = 'src/assets/logo.png'
+        yImg.src = '../../src/assets/logo.png'
       },
       dramRadialGradient() {
         let c = document.getElementById("imgC2");
