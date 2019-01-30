@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-11 16:22:52
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-30 10:34:52
+ * @LastEditTime: 2019-01-30 10:53:31
  * @Description:图片图像
  -->
 <template>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import logo from '../../src/assets/logo.png'
   export default {
     name: '',
     data() {
@@ -38,7 +39,7 @@
           ctx.fillStyle = bg
           ctx.fillRect(0, 50, 400, 300)
         }
-        yImg.src = '../../src/assets/logo.png'
+        yImg.src = logo
       },
       dramRadialGradient() {
         let c = document.getElementById("imgC2");
