@@ -2,31 +2,48 @@
  * @Author: caojing
  * @Date: 2019-01-23 16:26:01
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-26 16:16:42
+ * @LastEditTime: 2019-01-30 11:37:43
  * @Description: 像素处理
  -->
 <template>
   <div class="pixelWrap">
-    <canvas :width="width" :height="height" class="pCanvas" id="p1"></canvas>
-    <canvas :width="width" :height="height" class="pCanvas" id="p2"></canvas>
-    <canvas :width="width" :height="height" class="pCanvas" id="p3"></canvas>
+    <div class="pixelTop">
+      <canvas :width="width" :height="height" class="pCanvas" id="p1"></canvas>
+      <canvas :width="width" :height="height" class="pCanvas" id="p2"></canvas>
+      <canvas :width="width" :height="height" class="pCanvas" id="p3"></canvas>
+    </div>
+    <div class="pixelBottom">
+      <canvas width="1000" height="281" style="background:#fff" id="p4"></canvas>
+    </div>
   </div>
 </template>
 
 <script>
+  import webImg from '../../src/assets/web.jpg'
   export default {
     name: '',
     data() {
       return {
-        width: 300,
-        height: 300,
-        timer:null
+        width: 290,
+        height: 240,
+        timer: null
       }
     },
     components: {
 
     },
     methods: {
+      drawP4(){
+        let c = document.getElementById('p4')
+        let context = c.getContext('2d')
+        let yImg = new Image()
+        yImg.onload = () => {
+          console.log(yImg.width)
+          console.log(yImg.height)
+          context.drawImage(yImg, 0, 0, yImg.width,yImg.height)
+        }
+        yImg.src = webImg
+      },
       drawP1() {
         let c = document.getElementById('p1')
         let context = c.getContext('2d')
@@ -83,7 +100,7 @@
         let c = document.getElementById('p2')
         let context = c.getContext("2d")
         let str = "FRONT END"
-        let h = 60
+        let h = 50
         context.clearRect(0, 0, c.width, c.height);
         context.font = h + 'px impact';
         context.textBaseline = 'top';
@@ -142,6 +159,7 @@
         this.drawP2(NUM)
       }, 1000)
       this.drawP3()
+      this.drawP4()
     },
     created() {},
     destroyed() {
@@ -160,14 +178,31 @@
     width: 100%;
     height: 100%;
     background: #C2D3E5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    .pixelTop{
+      display:flex;
+      justify-content:center;
+      width:1000px;
+      background:#fff;
+    }
+    .pixelBottom{
+      display:flex;
+      justify-content:center;
+      margin:10px;
+      margin-top:20px;
+    }
   }
 
   .pCanvas {
     background: #fff;
-    margin: 10px;
+    margin: 20px 10px;
+    border-right:1px dashed #ccc;
+    &:nth-child(3){
+      border-right:0
+    }
   }
 
 </style>
