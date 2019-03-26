@@ -12,7 +12,8 @@
         <!-- <el-menu-item index="/clock">时钟</el-menu-item> -->
         <el-menu-item index="/coolClock">炫酷时钟</el-menu-item>
         <el-menu-item index="/imgDemo">背景色彩</el-menu-item>
-        <el-menu-item index="/pixelDemo">像素处理</el-menu-item>
+        <!-- <el-menu-item index="/pixelDemo">像素处理</el-menu-item> -->
+        <el-menu-item index="/3d">3d交互</el-menu-item>
         <!-- <el-menu-item index="/progress">进度条</el-menu-item> -->
       </el-menu>
     </header>

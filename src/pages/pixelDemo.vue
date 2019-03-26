@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-01-23 16:26:01
  * @LastEditors: caojing
- * @LastEditTime: 2019-01-30 11:37:43
+ * @LastEditTime: 2019-01-30 14:06:17
  * @Description: 像素处理
  -->
 <template>
@@ -90,7 +90,7 @@
         for (let i = 0; i < iAll / iNow; i++) {
           let newArr = []
           for (let j = 0; j < iNow; j++) {
-            newArr.push(arr.splice(Math.random() * arr.length, 1))
+            newArr.push(arr.splice(Math.random() * arr .length, 1))
           }
           allArr.push(newArr)
         }

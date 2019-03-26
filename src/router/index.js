@@ -9,6 +9,7 @@ import TransformDemo from '@/pages/TransformDemo'
 import ImgDemo from '@/pages/imgDemo'
 import CoolClock from '@/pages/coolClock'
 import PixelDemo from '@/pages/pixelDemo'
+import ThreeD from '@/pages/ThreeD'
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ export default new Router({
       path:'/pixelDemo',
       name:'PixelDemo',
       component:PixelDemo
+    },
+    {
+      path:'/3d',
+      name:'ThreeD',
+      component:ThreeD
     }
   ]
 })
