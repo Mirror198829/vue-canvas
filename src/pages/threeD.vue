@@ -2,16 +2,16 @@
  * @Author: caojing
  * @Date: 2019-03-26 14:29:42
  * @LastEditors: caojing
- * @LastEditTime: 2019-03-26 17:04:19
+ * @LastEditTime: 2019-03-27 11:30:11
  * @Description: 3d动画交互
  -->
 <template>
   <div style="position:relative">
-    <div class="sence">
+    <div class="sence" id="sence">
       <div class="box">
         <ul class="ring"></ul>
       </div>
-      <div class="item">
+      <div class="item" style="display:none">
         <p>阿斯顿发顺丰大撒旦发射点发射点发射点发阿斯顿发顺丰大撒旦发射点发射点发射点发阿斯顿发顺丰大撒旦发射点发射点发射点发阿斯顿发顺丰大撒旦发射点发射点发射点发</p>
         <i class="fa fa-close close"></i>
       </div>
@@ -44,17 +44,52 @@
     name: '',
     data() {
       return {
-        textShow:true,
+        textShow: false,
       }
     },
     components: {
 
     },
     methods: {
+      draw() {
+        var arr = [1, 3, 5, 7, 9, 11, 9, 7, 5, 3, 1]
+        var oSence = document.getElementById('sence')
+        var oBox = oSence.getElementsByClassName('box')[0]
+        var oUl = oBox.getElementsByTagName('ul')[0]
+        var aLi = oUl.getElementsByTagName('li')
+        var theta = Math.PI / (arr.length - 1) //角度
+        var phi = 0
+        var r = 150
+
+        for (var i = 0; i < arr.length; i++) {
+          phi = 2 * Math.PI / arr[i]
+          for (var j = 0; j < arr[i]; j++) {
+            var li = document.createElement('li')
+            li.innerHTML = '蒋鹏'
+            drawCircle(li, theta, phi, i, j)
+            oUl.appendChild(li)
+          }
+        }
+        for (let k = 0; k < aLi.length; k++) {
+          aLi[k].style.position ="absolute"
+          aLi[k].style.transform = 'translate3D(' + aLi[k].circleX + 'px,' + aLi[k].circleY + 'px,' + aLi[k].circleZ +
+            'px)';
+        }
+        var angleX = 0
+        setInterval(()=>{
+          angleX++
+          oBox.style.transform ="rotateX("+angleX+"deg)"
+        },100)
+        function drawCircle(obj, theta, phi, i, j) {
+          obj.circleX = r * Math.sin(theta * i) * Math.sin(phi * j) +200
+          obj.circleY = r * Math.cos(theta * i)+200
+          obj.circleZ = r * Math.sin(theta * i) * Math.cos(phi * j)
+        }
+      },
 
     },
     mounted() {
-
+      this.draw()
     },
     created() {}
   }
@@ -88,12 +123,13 @@
       border-color: @theme-color;
     }
   }
-  .close{
-    color:@theme-color;
-    position:absolute;
-    top:10px;
-    right:10px;
-    font-size:18px;
+
+  .close {
+    color: @theme-color;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
     cursor: pointer;
   }
 
@@ -101,7 +137,7 @@
     width: 400px;
     height: 400px;
     margin: 0 auto;
-    transform-style: preserve-3D;
+    transform-style: preserve-3d;
     perspective: 1000px;
     position: relative;
     border: 1px solid @base-color;
@@ -109,13 +145,13 @@
     .box {
       width: 100%;
       height: 100%;
-      transform-style: preserve-3D;
+      transform-style: preserve-3d;
 
       .ring {
         width: 100%;
         height: 100%;
         position: relative;
-
+        text-align:left;
         li {
           position: absolute;
         }
@@ -185,6 +221,7 @@
       width: 100px;
       height: 100%;
       .btnClass;
+
       &:nth-of-type(1) {
         border-radius: 15px 0 0 15px;
       }
@@ -239,8 +276,9 @@
         height: 100%;
         border-radius: 15px;
         .btnClass;
-        &:nth-of-type(1){
-          margin-right:15px;
+
+        &:nth-of-type(1) {
+          margin-right: 15px;
         }
       }
     }
