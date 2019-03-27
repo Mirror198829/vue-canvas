@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-03-26 14:29:42
  * @LastEditors: caojing
- * @LastEditTime: 2019-03-27 11:32:48
+ * @LastEditTime: 2019-03-27 14:17:57
  * @Description: 3d动画交互
  -->
 <template>
@@ -65,26 +65,31 @@
           phi = 2 * Math.PI / arr[i]
           for (var j = 0; j < arr[i]; j++) {
             var li = document.createElement('li')
-            li.innerHTML = '曹静'
+            li.innerHTML = '福'
             drawCircle(li, theta, phi, i, j)
             oUl.appendChild(li)
           }
         }
         for (let k = 0; k < aLi.length; k++) {
           aLi[k].style.position ="absolute"
-          aLi[k].style.transform = 'translate3D(' + aLi[k].circleX + 'px,' + aLi[k].circleY + 'px,' + aLi[k].circleZ +
-            'px)';
           aLi[k].style.color="#00a0e9"
+          aLi[k].style.fontSize = '20px'
+          aLi[k].style.fontWeight = 700
+          aLi[k].style.transform = 'translate3D(' + aLi[k].circleX + 'px,' + aLi[k].circleY + 'px,' + aLi[k].circleZ +
+            'px) rotateY('+aLi[k].circlePhi+'rad) rotateX('+aLi[k].circleTheta+'rad)';
+          
         }
         var angleX = 0
         setInterval(()=>{
           angleX++
-          oBox.style.transform ="rotateX("+angleX+"deg)"
+          oBox.style.transform ="rotateX("+angleX+"deg) rotateY("+angleX+"deg)"
         },100)
         function drawCircle(obj, theta, phi, i, j) {
-          obj.circleX = r * Math.sin(theta * i) * Math.sin(phi * j) +200
+          obj.circleX = r * Math.sin(theta * i) * Math.sin(phi * j) +200 //200的目的是使得整个圆球朝着画布中心方向，否则是以画布左上角为圆心
           obj.circleY = r * Math.cos(theta * i)+200
           obj.circleZ = r * Math.sin(theta * i) * Math.cos(phi * j)
+          obj.circleTheta = theta*i - Math.PI/2 //使得文字都是朝向圆形的方向
+          obj.circlePhi = phi*j//使得文字都是朝向圆形的方向
         }
       },
 
