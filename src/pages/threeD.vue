@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-03-26 14:29:42
  * @LastEditors: caojing
- * @LastEditTime: 2019-03-27 14:17:57
+ * @LastEditTime: 2019-03-27 14:44:12
  * @Description: 3d动画交互
  -->
 <template>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+  import word from './word/word'
   export default {
     name: '',
     data() {
@@ -52,44 +53,71 @@
     },
     methods: {
       draw() {
-        var arr = [1, 3, 5, 7, 9, 11, 9, 7, 5, 3, 1]
         var oSence = document.getElementById('sence')
         var oBox = oSence.getElementsByClassName('box')[0]
         var oUl = oBox.getElementsByTagName('ul')[0]
         var aLi = oUl.getElementsByTagName('li')
-        var theta = Math.PI / (arr.length - 1) //角度
+        var num = 0
+        var layer = 0
+        var wordNum = 0
+        var circleArr = []
+        /**
+         * 动态文字生成
+         */
+        var s = word
+        for (let i = 4; i < 12; i++) {
+          num = i * i + (i + 1) * (i + 1)
+          if (num >= s.length) {
+            layer = (i - 1) * 2 + 1
+            break
+          }
+          layer = (i - 1) * 2 + 1
+        }
+        for (let i = 0; i < layer; i++) {
+          if (i < (layer + 1) / 2) {
+            wordNum += 2
+          } else {
+            wordNum -= 2
+          }
+          circleArr.push(wordNum)
+        }
+        /**
+         * 绘制圆形
+         */
+        var theta = Math.PI / (circleArr.length - 1) //角度
         var phi = 0
         var r = 150
-
-        for (var i = 0; i < arr.length; i++) {
-          phi = 2 * Math.PI / arr[i]
-          for (var j = 0; j < arr[i]; j++) {
+        num = 0
+        for (var i = 0; i < circleArr.length; i++) {
+          phi = 2 * Math.PI / circleArr[i]
+          for (var j = 0; j < circleArr[i]; j++) {
             var li = document.createElement('li')
-            li.innerHTML = '福'
+            li.innerHTML = s[num]
+            num++
             drawCircle(li, theta, phi, i, j)
             oUl.appendChild(li)
           }
         }
         for (let k = 0; k < aLi.length; k++) {
-          aLi[k].style.position ="absolute"
-          aLi[k].style.color="#00a0e9"
-          aLi[k].style.fontSize = '20px'
-          aLi[k].style.fontWeight = 700
+          aLi[k].style.position = "absolute"
+          aLi[k].style.color = "#00a0e9"
+          aLi[k].style.fontSize = '14px'
           aLi[k].style.transform = 'translate3D(' + aLi[k].circleX + 'px,' + aLi[k].circleY + 'px,' + aLi[k].circleZ +
-            'px) rotateY('+aLi[k].circlePhi+'rad) rotateX('+aLi[k].circleTheta+'rad)';
-          
+            'px) rotateY(' + aLi[k].circlePhi + 'rad) rotateX(' + aLi[k].circleTheta + 'rad)';
+
         }
         var angleX = 0
-        setInterval(()=>{
+        setInterval(() => {
           angleX++
-          oBox.style.transform ="rotateX("+angleX+"deg) rotateY("+angleX+"deg)"
-        },100)
+          oBox.style.transform = "rotateX(" + angleX + "deg) rotateY(" + angleX + "deg)"
+        }, 100)
+
         function drawCircle(obj, theta, phi, i, j) {
-          obj.circleX = r * Math.sin(theta * i) * Math.sin(phi * j) +200 //200的目的是使得整个圆球朝着画布中心方向，否则是以画布左上角为圆心
-          obj.circleY = r * Math.cos(theta * i)+200
+          obj.circleX = r * Math.sin(theta * i) * Math.sin(phi * j) + 200 //200的目的是使得整个圆球朝着画布中心方向，否则是以画布左上角为圆心
+          obj.circleY = -r * Math.cos(theta * i) + 200
           obj.circleZ = r * Math.sin(theta * i) * Math.cos(phi * j)
-          obj.circleTheta = theta*i - Math.PI/2 //使得文字都是朝向圆形的方向
-          obj.circlePhi = phi*j//使得文字都是朝向圆形的方向
+          obj.circleTheta = theta * (circleArr.length - i) - Math.PI / 2 //使得文字都是朝向圆形的方向
+          obj.circlePhi = phi * j //使得文字都是朝向圆形的方向
         }
       },
 
@@ -129,6 +157,7 @@
       border-color: @theme-color;
     }
   }
+
   .close {
     color: @theme-color;
     position: absolute;
@@ -141,7 +170,7 @@
   .sence {
     width: 400px;
     height: 400px;
-    margin: 0 auto;
+    margin: 30px auto 0;
     transform-style: preserve-3d;
     perspective: 1000px;
     position: relative;
@@ -156,7 +185,8 @@
         width: 100%;
         height: 100%;
         position: relative;
-        text-align:left;
+        text-align: left;
+
         li {
           position: absolute;
         }
