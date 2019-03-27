@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-03-26 14:29:42
  * @LastEditors: caojing
- * @LastEditTime: 2019-03-27 11:30:11
+ * @LastEditTime: 2019-03-27 11:32:48
  * @Description: 3d动画交互
  -->
 <template>
@@ -65,7 +65,7 @@
           phi = 2 * Math.PI / arr[i]
           for (var j = 0; j < arr[i]; j++) {
             var li = document.createElement('li')
-            li.innerHTML = '蒋鹏'
+            li.innerHTML = '曹静'
             drawCircle(li, theta, phi, i, j)
             oUl.appendChild(li)
           }
@@ -74,6 +74,7 @@
           aLi[k].style.position ="absolute"
           aLi[k].style.transform = 'translate3D(' + aLi[k].circleX + 'px,' + aLi[k].circleY + 'px,' + aLi[k].circleZ +
             'px)';
+          aLi[k].style.color="#00a0e9"
         }
         var angleX = 0
         setInterval(()=>{
@@ -123,7 +124,6 @@
       border-color: @theme-color;
     }
   }
-
   .close {
     color: @theme-color;
     position: absolute;
