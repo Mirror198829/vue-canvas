@@ -2,7 +2,7 @@
  * @Author: caojing
  * @Date: 2019-03-26 14:29:42
  * @LastEditors: caojing
- * @LastEditTime: 2019-03-27 14:44:12
+ * @LastEditTime: 2019-04-02 14:46:41
  * @Description: 3d动画交互
  -->
 <template>
@@ -58,9 +58,12 @@
         var oUl = oBox.getElementsByTagName('ul')[0]
         var aLi = oUl.getElementsByTagName('li')
         var num = 0
-        var layer = 0
-        var wordNum = 0
-        var circleArr = []
+        var layer = 0 //圆形层数
+        var wordNum = -1
+        var circleArr = [] //球形数组
+        var coneArr = [] //锥形数组
+        var coneNum = 0;
+        var liNum = 0;
         /**
          * 动态文字生成
          */
@@ -88,6 +91,7 @@
         var phi = 0
         var r = 150
         num = 0
+        
         for (var i = 0; i < circleArr.length; i++) {
           phi = 2 * Math.PI / circleArr[i]
           for (var j = 0; j < circleArr[i]; j++) {
@@ -98,6 +102,7 @@
             oUl.appendChild(li)
           }
         }
+        
         for (let k = 0; k < aLi.length; k++) {
           aLi[k].style.position = "absolute"
           aLi[k].style.color = "#00a0e9"
@@ -105,11 +110,39 @@
           aLi[k].style.transform = 'translate3D(' + aLi[k].circleX + 'px,' + aLi[k].circleY + 'px,' + aLi[k].circleZ +
             'px) rotateY(' + aLi[k].circlePhi + 'rad) rotateX(' + aLi[k].circleTheta + 'rad)';
 
+        } 
+        /**
+         * 绘制圆锥形
+         */
+        for(let i=0;i<aLi.length;i++){
+          coneNum += 2*i - 1 //获取一共用到的文字数
+          if(coneNum > aLi.length){
+            coneNum-=2*i-1
+            break
+          }
+          coneArr.push(2*i-1)
+        }
+        //确认圆锥的属性
+        for(let i=0;i<coneArr.length;i++){
+          phi = 2*Math.PI/coneArr[i]
+          for(let j=0;j<coneArr[i];j++){
+            drawCone(aLi[liNum],phi,i,j)
+            liNum++
+          }
+        }
+        //绘制圆锥
+        for(let i=0;i<aLi.length;i++){
+          aLi[i].style.display="none"
+        }
+        for(let i=0;i<coneNum;i++){
+          aLi[i].style.display="block"
+          aLi[i].style.transform = 'translate3D(' + aLi[i].coneX + 'px,' + aLi[i].coneY + 'px,' + aLi[i].coneZ +
+            'px) rotateY(' + aLi[i].conePhi + 'rad) rotateX(' + aLi[i].coneTheta + 'rad)';
         }
         var angleX = 0
         setInterval(() => {
           angleX++
-          oBox.style.transform = "rotateX(" + angleX + "deg) rotateY(" + angleX + "deg)"
+          oBox.style.transform = "rotateX(0deg) rotateY(" + angleX + "deg)"
         }, 100)
 
         function drawCircle(obj, theta, phi, i, j) {
@@ -118,6 +151,14 @@
           obj.circleZ = r * Math.sin(theta * i) * Math.cos(phi * j)
           obj.circleTheta = theta * (circleArr.length - i) - Math.PI / 2 //使得文字都是朝向圆形的方向
           obj.circlePhi = phi * j //使得文字都是朝向圆形的方向
+        }
+        function drawCone(obj,phi,i,j){
+          obj.coneX = (2*r/coneArr.length)*i*Math.tan(Math.PI/6)*Math.sin(phi*j)+200
+          obj.coneY = (2*r/coneArr.length)*i
+          obj.coneZ = (2*r/coneArr.length)*i*Math.cos(phi*j)
+          obj.coneTheta = Math.PI/6
+          obj.conePhi = phi*j
+
         }
       },
 
