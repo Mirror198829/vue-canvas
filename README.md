@@ -120,9 +120,9 @@ canvas标签内设置的宽高才是真正画布的宽高
 ``` javascript
 drawHoursScale(ctx, x0, y0, scaleNum, scaleW, maxL, minL) {
     for (let i = 0; i < scaleNum; i++) {
-      let angel = -90 + i * (360 / scaleNum) //角度
-      let [x1, y1] = [x0 + Math.cos(angel * Math.PI / 180) * maxL, y0 + Math.sin(angel * Math.PI / 180) * maxL]
-      let [x2, y2] = [x0 + Math.cos(angel * Math.PI / 180) * minL, y0 + Math.sin(angel * Math.PI / 180) * minL]
+      let angle = -90 + i * (360 / scaleNum) //角度
+      let [x1, y1] = [x0 + Math.cos(angle * Math.PI / 180) * maxL, y0 + Math.sin(angle * Math.PI / 180) * maxL]
+      let [x2, y2] = [x0 + Math.cos(angle * Math.PI / 180) * minL, y0 + Math.sin(angle * Math.PI / 180) * minL]
       ctx.save()
       ctx.beginPath()
       ctx.lineWidth = scaleW
@@ -143,8 +143,8 @@ drawHoursScale(ctx, x0, y0, scaleNum, scaleW, maxL, minL) {
 
 代码如下：
 ``` javascript
-drawTimeNeedle(ctx, x0, y0, lineW, L, angel, color = '#000') {
-    let [x, y] = [x0 + Math.cos(angel * Math.PI / 180) * L, y0 + Math.sin(angel * Math.PI / 180) * L]
+drawTimeNeedle(ctx, x0, y0, lineW, L, angle, color = '#000') {
+    let [x, y] = [x0 + Math.cos(angle * Math.PI / 180) * L, y0 + Math.sin(angle * Math.PI / 180) * L]
     ctx.save()
     ctx.beginPath()
     ctx.strokeStyle = color
